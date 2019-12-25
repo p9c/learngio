@@ -11,7 +11,7 @@ import (
 	"gioui.org/unit"
 )
 
-func DrawRectangle(gtx *layout.Context, w, h int, color color.RGBA, ne, nw, se, sw float32, inset unit.Value) {
+func DrawRectangle(gtx *layout.Context, w, h int, color color.RGBA, borderRadius [4]float32, inset unit.Value) {
 	in := layout.UniformInset(inset)
 	in.Layout(gtx, func() {
 		cs := gtx.Constraints
@@ -24,7 +24,7 @@ func DrawRectangle(gtx *layout.Context, w, h int, color color.RGBA, ne, nw, se, 
 		paint.ColorOp{Color: color}.Add(gtx.Ops)
 
 		clip.Rect{Rect: square,
-			NE: ne, NW: nw, SE: se, SW: sw}.Op(gtx.Ops).Add(gtx.Ops) // HLdraw
+			NE: borderRadius[0], NW: borderRadius[1], SE: borderRadius[2], SW: borderRadius[3]}.Op(gtx.Ops).Add(gtx.Ops) // HLdraw
 		paint.PaintOp{Rect: square}.Add(gtx.Ops)
 		gtx.Dimensions = layout.Dimensions{Size: image.Point{X: w, Y: h}}
 	})

@@ -1,4 +1,4 @@
-package main
+package simple_pointers
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 	"gioui.org/layout"
 	"gioui.org/unit"
 	"gioui.org/widget/material"
-	"github.com/p9c/learngio/components"
+	"github.com/p9c/learngio/components/button"
 	"github.com/p9c/learngio/helpers"
 	"image/color"
 )
@@ -24,6 +24,9 @@ func (it *item) doIncrease(n int) {
 func (it *item) doDecrease(n int) {
 	it.i = it.i - int(n)
 }
+func (it *item) doReset() {
+	it.i = 0
+}
 
 func main() {
 	itemValue := item{
@@ -34,16 +37,22 @@ func main() {
 		gofont.Register()
 		th := material.NewTheme()
 
-		increase := &components.Button{
+		increase := &button.Button{
 			Name: "increase",
-			Do: func() {
+			Do: func(interface{}) {
 				itemValue.doIncrease(1)
 			},
 		}
-		decrease := &components.Button{
+		decrease := &button.Button{
 			Name: "decrease",
-			Do: func() {
+			Do: func(interface{}) {
 				itemValue.doDecrease(1)
+			},
+		}
+		reset := &button.Button{
+			Name: "reset",
+			Do: func(interface{}) {
+				itemValue.doReset()
 			},
 		}
 
@@ -78,10 +87,13 @@ func main() {
 									}),
 									layout.Flexed(1, func() {
 										layout.Flex{}.Layout(gtx,
-											layout.Flexed(0.5, func() {
+											layout.Flexed(0.4, func() {
 												increase.Layout(gtx)
 											}),
-											layout.Flexed(0.5, func() {
+											layout.Flexed(0.2, func() {
+												reset.Layout(gtx)
+											}),
+											layout.Flexed(0.4, func() {
 												decrease.Layout(gtx)
 											}),
 										)

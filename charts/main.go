@@ -4,13 +4,16 @@ import (
 	"bytes"
 	"fmt"
 	"gioui.org/app"
+	"gioui.org/io/pointer"
 	"gioui.org/io/system"
 	"gioui.org/layout"
+	"gioui.org/text"
 	"gioui.org/unit"
 	"gioui.org/widget/material"
 	"github.com/ajstarks/svgo"
 	"github.com/p9c/learngio/helpers"
 	"github.com/vdobler/chart"
+	"image"
 	"image/color"
 )
 
