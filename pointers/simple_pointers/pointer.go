@@ -8,10 +8,20 @@ import (
 	"gioui.org/layout"
 	"gioui.org/unit"
 	"gioui.org/widget/material"
-	"github.com/p9c/learngio/components/button"
 	"github.com/p9c/learngio/helpers"
-	"image/color"
 )
+
+type Button struct {
+	pressed        bool
+	Name           string
+	Do             func(interface{})
+	ColorBg        string
+	ColorBgHover   string
+	ColorText      string
+	ColorTextHover string
+	BorderRadius   [4]float32
+	OperateValue   interface{}
+}
 
 type item struct {
 	i int
@@ -74,7 +84,7 @@ func main() {
 								layout.Flex{Axis: layout.Vertical}.Layout(gtx,
 									layout.Rigid(func() {
 										cs := gtx.Constraints
-										helpers.DrawRectangle(gtx, cs.Width.Max, 120, color.RGBA{A: 0xff, R: 0x30, G: 0x30, B: 0xcf}, 0, 0, 0, 0, unit.Dp(0))
+										helpers.DrawRectangle(gtx, cs.Width.Max, 120, helpers.HexARGB("ff303030"), [4]float32{0, 0, 0, 0}, unit.Dp(0))
 
 										in := layout.UniformInset(unit.Dp(0))
 										in.Layout(gtx, func() {

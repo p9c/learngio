@@ -14,11 +14,11 @@ import (
 func DrawRectangle(gtx *layout.Context, w, h int, color color.RGBA, borderRadius [4]float32, inset unit.Value) {
 	in := layout.UniformInset(inset)
 	in.Layout(gtx, func() {
-		cs := gtx.Constraints
+		//cs := gtx.Constraints
 		square := f32.Rectangle{
 			Max: f32.Point{
-				X: float32(cs.Width.Max),
-				Y: float32(cs.Height.Max),
+				X: float32(w),
+				Y: float32(h),
 			},
 		}
 		paint.ColorOp{Color: color}.Add(gtx.Ops)

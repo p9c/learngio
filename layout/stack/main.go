@@ -31,7 +31,7 @@ func drawRects(gtx *layout.Context) {
 
 	stack.Layout(gtx,
 		layout.Stacked(func() {
-			helpers.DrawRectangle(gtx, cs.Width.Max, cs.Height.Max, color.RGBA{A: 0xff, R: 0x30, G: 0xcf, B: 0x30}, 0, 0, 0, 0, unit.Dp(64))
+			helpers.DrawRectangle(gtx, cs.Width.Max, cs.Height.Max, helpers.HexARGB("ff303030"), [4]float32{0, 0, 0, 0}, unit.Dp(64))
 
 		}),
 	)

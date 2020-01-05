@@ -22,11 +22,11 @@ func main() {
 				}.Layout(gtx,
 					layout.Flexed(0.25, func() {
 						cs := gtx.Constraints
-						helpers.DrawRectangle(gtx, cs.Width.Max, cs.Height.Max, color.RGBA{A: 0xff, R: 0x30, G: 0xcf, B: 0x30}, 0, 0, 0, 0, unit.Dp(0))
+						helpers.DrawRectangle(gtx, cs.Width.Max, cs.Height.Max, helpers.HexARGB("ff303030"), [4]float32{0, 0, 0, 0}, unit.Dp(0))
 					}),
 					layout.Flexed(0.25, func() {
 						cs := gtx.Constraints
-						helpers.DrawRectangle(gtx, cs.Width.Max, cs.Height.Max, color.RGBA{A: 0xff, R: 0x30, G: 0x30, B: 0xcf}, 0, 0, 0, 0, unit.Dp(0))
+						helpers.DrawRectangle(gtx, cs.Width.Max, cs.Height.Max, helpers.HexARGB("ff303030"), [4]float32{0, 0, 0, 0}, unit.Dp(0))
 					}),
 				)
 				e.Frame(gtx.Ops)
