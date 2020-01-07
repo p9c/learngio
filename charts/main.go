@@ -3,17 +3,9 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"gioui.org/app"
-	"gioui.org/io/pointer"
-	"gioui.org/io/system"
-	"gioui.org/layout"
-	"gioui.org/text"
-	"gioui.org/unit"
-	"gioui.org/widget/material"
 	"github.com/ajstarks/svgo"
 	"github.com/p9c/learngio/helpers"
 	"github.com/vdobler/chart"
-	"image"
 	"image/color"
 )
 
@@ -100,46 +92,46 @@ func main() {
 
 	//svgOOO := ico.ParallelCoin
 	//svgOOO := pieChart()
-
-	go func() {
-		w := app.NewWindow()
-		gtx := layout.NewContext(w.Queue())
-		for e := range w.Events() {
-			if e, ok := e.(system.FrameEvent); ok {
-				gtx.Reset(e.Config, e.Size)
-				layout.Flex{
-					Axis:    layout.Horizontal,
-					Spacing: layout.SpaceSides,
-				}.Layout(gtx,
-					layout.Flexed(0.5, func() {
-						layout.Flex{
-							Axis:    layout.Vertical,
-							Spacing: layout.SpaceSides,
-						}.Layout(gtx,
-							layout.Flexed(0.5, func() {
-								cs := gtx.Constraints
-								helpers.DrawRectangle(gtx, cs.Width.Max, cs.Height.Max, helpers.HexARGB("ff303030"), [4]float32{0, 0, 0, 0}, unit.Dp(0))
-
-								layout.Align(layout.Center).Layout(gtx, func() {
-									layout.Inset{Top: unit.Dp(4), Bottom: unit.Dp(4), Left: unit.Dp(5), Right: unit.Dp(4)}.Layout(gtx, func() {
-
-										icsLogo, err := material.NewIcon(pieChart())
-										if err != nil {
-											//log.FATAL(err)
-										}
-
-										icsLogo.Color = color.RGBA{A: 0xff, R: 0xcf, G: 0xcf, B: 0xcf}
-										icsLogo.Layout(gtx, unit.Dp(64))
-									})
-								})
-
-							}),
-						)
-					}),
-				)
-				e.Frame(gtx.Ops)
-			}
-		}
-	}()
-	app.Main()
+	//
+	//go func() {
+	//	w := app.NewWindow()
+	//	gtx := layout.NewContext(w.Queue())
+	//	for e := range w.Events() {
+	//		if e, ok := e.(system.FrameEvent); ok {
+	//			gtx.Reset(e.Config, e.Size)
+	//			layout.Flex{
+	//				Axis:    layout.Horizontal,
+	//				Spacing: layout.SpaceSides,
+	//			}.Layout(gtx,
+	//				layout.Flexed(0.5, func() {
+	//					layout.Flex{
+	//						Axis:    layout.Vertical,
+	//						Spacing: layout.SpaceSides,
+	//					}.Layout(gtx,
+	//						layout.Flexed(0.5, func() {
+	//							cs := gtx.Constraints
+	//							helpers.DrawRectangle(gtx, cs.Width.Max, cs.Height.Max, helpers.HexARGB("ff303030"), [4]float32{0, 0, 0, 0}, unit.Dp(0))
+	//
+	//							layout.Align(layout.Center).Layout(gtx, func() {
+	//								layout.Inset{Top: unit.Dp(4), Bottom: unit.Dp(4), Left: unit.Dp(5), Right: unit.Dp(4)}.Layout(gtx, func() {
+	//
+	//									icsLogo, err := material.NewIcon(pieChart())
+	//									if err != nil {
+	//										//log.FATAL(err)
+	//									}
+	//
+	//									icsLogo.Color = color.RGBA{A: 0xff, R: 0xcf, G: 0xcf, B: 0xcf}
+	//									icsLogo.Layout(gtx, unit.Dp(64))
+	//								})
+	//							})
+	//
+	//						}),
+	//					)
+	//				}),
+	//			)
+	//			e.Frame(gtx.Ops)
+	//		}
+	//	}
+	//}()
+	//app.Main()
 }
