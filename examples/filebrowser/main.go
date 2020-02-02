@@ -15,17 +15,11 @@ import (
 	"image/color"
 	"io/ioutil"
 	"log"
-	"os"
-)
-
-var (
-	seleceted string
 )
 
 func main() {
-	listRootThings, _ := readThings("")
-	listSubThings, _ := readThings(seleceted)
-	col := color.RGBA{A: 0xff, R: 0x30, G: 0xcf, B: 0x30}
+	//col := color.RGBA{A: 0xff, R: 0x30, G: 0xcf, B: 0x30}
+
 	go func() {
 		w := app.NewWindow(
 			app.Size(unit.Dp(400), unit.Dp(800)),
@@ -47,16 +41,28 @@ func main() {
 		//listRoot := &layout.List{
 		//	Axis: layout.Vertical,
 		//}
-		listSub := &layout.List{
-			Axis: layout.Vertical,
-		}
+		//listSub := &layout.List{
+		//	Axis: layout.Vertical,
+		//}
+		//thingsCurrent := new(Thing)
 
-		things := *new(map[string]*Button)
+		//selected := &Thing{
+		//
+		//	Name:     "/",
+		//	pressed:  false,
+		//	selected: false,
+		//}
 
-		for _, t := range listRootThings {
-			things[t.Name()] = new(Button)
-		}
-		//button := new(Button)
+		//listRootThings := listThings("")
+		//listSubThings, _ := readThings(selected)
+		//things := make(map[string]*Thing)
+		//for _, t := range listRootThings {
+		//	things[t.Name] = new(Thing)
+		//}
+		//subThings := make(map[string]*Thing)
+		//for _, t := range listSubThings {
+		//	listRootThings[t.Name()] = new(Thing)
+		//}
 
 		gtx := layout.NewContext(w.Queue())
 		for e := range w.Events() {
@@ -64,34 +70,40 @@ func main() {
 				gtx.Reset(e.Config, e.Size)
 
 				widgets := []func(){
-					//func() {
-					//	// Folder list
-					//	listRoot.Layout(gtx, len(listRootThings), func(i int) {
-					//		//button := new(Button)
-					//		if listRootThings[i].IsDir() {
-					//			col := color.RGBA{A: 0xff, R: 0xcf, G: 0xcf, B: 0x30}
-					//			button.Layout(listRootThings[i].Name(), col, gtx)
-					//		} else {
-					//			button.Layout(listRootThings[i].Name(), col, gtx)
-					//		}
-					//	})
-					//	///
-					//},
 					func() {
 						// Folder list
-						listSub.Layout(gtx, len(listSubThings), func(i int) {
-							if listSubThings[i].IsDir() {
-								col := color.RGBA{A: 0xff, R: 0xcf, G: 0xcf, B: 0x30}
-								things[listSubThings[i].Name()].Layout(listSubThings[i].Name(), col, gtx)
-							} else {
-								things[listSubThings[i].Name()].Layout(listSubThings[i].Name(), col, gtx)
-							}
-						})
+						//layout.List{
+						//	Axis: layout.Vertical,
+						//}.Layout(gtx, len(listRootThings), func(i int) {
+						//	//button := new(Button)
+						//	if listRootThings[i].IsDir() {
+						//		col := color.RGBA{A: 0xff, R: 0xcf, G: 0xcf, B: 0x30}
+						//		things[listRootThings[i].Name].Layout(listRootThings[i].Name, col, gtx)
+						//	} else {
+						//		things[listRootThings[i].Name].Layout(listRootThings[i].Name, col, gtx)
+						//	}
+						//})
 						///
+					},
+					func() {
+						// Folder list
+						listThings("/", gtx)
+						//listSub.Layout(gtx, len(listSubThings), func(i int) {
+						//	if listSubThings[i].IsDir() {
+						//		col := color.RGBA{A: 0xff, R: 0xcf, G: 0xcf, B: 0x30}
+						//		subThings[listSubThings[i].Name()].Layout(listSubThings[i].Name(), col, gtx)
+						//	} else {
+						//		subThings[listSubThings[i].Name()].Layout(listSubThings[i].Name(), col, gtx)
+						//	}
+						//})
+						//
+					},
+					func() {
+						//selected.Info(selected, col, gtx)
 					},
 				}
 				mainList.Layout(gtx, len(widgets), func(i int) {
-					layout.UniformInset(unit.Dp(3)).Layout(gtx, widgets[i])
+					layout.UniformInset(unit.Dp(0)).Layout(gtx, widgets[i])
 				})
 				//////
 				////
@@ -103,37 +115,41 @@ func main() {
 	app.Main()
 }
 
-type Tab struct {
-	name   string
-	layout layout.List
+type Thing struct {
+	Name     string
+	Type     string
+	out      interface{}
+	pressed  bool
+	selected bool
 }
 
-type Button struct {
-	pressed bool
+func (t *Thing) Info(col color.RGBA, gtx *layout.Context) {
+	th := material.NewTheme()
+	th.H6(t.Name).Layout(gtx)
 }
 
 // START OMIT
-func (b *Button) Layout(text string, col color.RGBA, gtx *layout.Context) {
-	for _, e := range gtx.Events(b) { // HLevent
+func (t *Thing) Layout(text string, col color.RGBA, gtx *layout.Context) {
+	for _, e := range gtx.Events(t) { // HLevent
 		if e, ok := e.(pointer.Event); ok { // HLevent
 			switch e.Type { // HLevent
 			case pointer.Press: // HLevent
-				b.pressed = true // HLevent
-				seleceted = text
+				t.pressed = true // HLevent
+				t.selected = true
 			case pointer.Release: // HLevent
-				b.pressed = false // HLevent
+				t.pressed = false // HLevent
 			}
 		}
 	}
 	th := material.NewTheme()
 
-	if b.pressed {
+	if t.pressed {
 		col = color.RGBA{A: 0xff, R: 0x30, G: 0xcf, B: 0xcf}
 	}
 	pointer.Rect( // HLevent
 		image.Rectangle{Max: image.Point{X: 500, Y: 500}}, // HLevent
 	).Add(gtx.Ops) // HLevent
-	pointer.InputOp{Key: b}.Add(gtx.Ops) // HLevent
+	pointer.InputOp{Key: t}.Add(gtx.Ops) // HLevent
 	drawSquare(gtx.Ops, col)
 	th.H6(text).Layout(gtx)
 }
@@ -148,13 +164,34 @@ func drawSquare(ops *op.Ops, color color.RGBA) {
 	paint.PaintOp{Rect: square}.Add(ops)
 }
 
-func readThings(dir string) (files []os.FileInfo, err error) {
+func listThings(dir string, gtx *layout.Context) {
+	list := &layout.List{
+		Axis: layout.Vertical,
+	}
+
 	if dir == "" {
 		dir = "/"
 	}
-	files, err = ioutil.ReadDir(dir)
+	listThings, err := ioutil.ReadDir(dir)
 	if err != nil {
 		log.Fatal(err)
 	}
-	return
+	things := make(map[string]*Thing)
+	for _, t := range listThings {
+		things[t.Name()] = &Thing{
+			Name: t.Name(),
+		}
+		if t.IsDir() {
+			things[t.Name()].Type = "space"
+		}
+	}
+
+	list.Layout(gtx, len(listThings), func(i int) {
+		col := color.RGBA{A: 0xff, R: 0xcf, G: 0xcf, B: 0x30}
+		if listThings[i].IsDir() {
+		} else {
+			col = color.RGBA{A: 0xff, R: 0xcf, G: 0x30, B: 0x30}
+		}
+		things[listThings[i].Name()].Layout(listThings[i].Name(), col, gtx)
+	})
 }

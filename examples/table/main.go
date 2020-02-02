@@ -9,14 +9,11 @@ import (
 	"github.com/gop9/olt/gio/op/paint"
 	"github.com/gop9/olt/gio/unit"
 	"github.com/gop9/olt/gio/widget/material"
-	"github.com/p9c/learngio/pkg/fonts"
-
 	"image"
 	"image/color"
 )
 
 func main() {
-	fonts.Register()
 
 	th := material.NewTheme()
 	go func() {

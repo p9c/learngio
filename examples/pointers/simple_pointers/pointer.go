@@ -1,122 +1,76 @@
-package simple_pointers
+package main
 
 import (
-	"fmt"
 	"github.com/gop9/olt/gio/app"
-	"github.com/gop9/olt/gio/font/gofont"
+	"github.com/gop9/olt/gio/f32"
+	"github.com/gop9/olt/gio/io/pointer"
 	"github.com/gop9/olt/gio/io/system"
 	"github.com/gop9/olt/gio/layout"
-	"github.com/gop9/olt/gio/unit"
+	"github.com/gop9/olt/gio/op"
+	"github.com/gop9/olt/gio/op/paint"
 	"github.com/gop9/olt/gio/widget/material"
-	"github.com/p9c/learngio/helpers"
+	"image"
+	"image/color"
 )
 
-type Button struct {
-	pressed        bool
-	Name           string
-	Do             func(interface{})
-	ColorBg        string
-	ColorBgHover   string
-	ColorText      string
-	ColorTextHover string
-	BorderRadius   [4]float32
-	OperateValue   interface{}
-}
+var text = "button txt"
 
-type item struct {
-	i int
-}
-
-func (it *item) doIncrease(n int) {
-	it.i = it.i + int(n)
-}
-
-func (it *item) doDecrease(n int) {
-	it.i = it.i - int(n)
-}
-func (it *item) doReset() {
-	it.i = 0
-}
-
+// START QUEUE OMIT
 func main() {
-	itemValue := item{
-		i: 0,
-	}
 	go func() {
 		w := app.NewWindow()
-		gofont.Register()
-		th := material.NewTheme()
-
-		increase := &button.Button{
-			Name: "increase",
-			Do: func(interface{}) {
-				itemValue.doIncrease(1)
-			},
-		}
-		decrease := &button.Button{
-			Name: "decrease",
-			Do: func(interface{}) {
-				itemValue.doDecrease(1)
-			},
-		}
-		reset := &button.Button{
-			Name: "reset",
-			Do: func(interface{}) {
-				itemValue.doReset()
-			},
-		}
-
+		button := new(Button)
 		gtx := layout.NewContext(w.Queue())
 		for e := range w.Events() {
 			if e, ok := e.(system.FrameEvent); ok {
 				gtx.Reset(e.Config, e.Size)
-				layout.Flex{
-					Axis:    layout.Horizontal,
-					Spacing: layout.SpaceSides,
-				}.Layout(gtx,
-					layout.Flexed(0.5, func() {
-						layout.Flex{
-							Axis:    layout.Vertical,
-							Spacing: layout.SpaceSides,
-						}.Layout(gtx,
-							layout.Flexed(0.5, func() {
+				button.Layout(gtx)
 
-								layout.Flex{Axis: layout.Vertical}.Layout(gtx,
-									layout.Rigid(func() {
-										cs := gtx.Constraints
-										helpers.DrawRectangle(gtx, cs.Width.Max, 120, helpers.HexARGB("ff303030"), [4]float32{0, 0, 0, 0}, unit.Dp(0))
-
-										in := layout.UniformInset(unit.Dp(0))
-										in.Layout(gtx, func() {
-											layout.Align(layout.Center).Layout(gtx, func() {
-												th.H3(fmt.Sprint(itemValue.i)).Layout(gtx)
-											})
-
-										})
-
-									}),
-									layout.Flexed(1, func() {
-										layout.Flex{}.Layout(gtx,
-											layout.Flexed(0.4, func() {
-												increase.Layout(gtx)
-											}),
-											layout.Flexed(0.2, func() {
-												reset.Layout(gtx)
-											}),
-											layout.Flexed(0.4, func() {
-												decrease.Layout(gtx)
-											}),
-										)
-									}),
-								)
-
-							}),
-						)
-					}),
-				)
 				e.Frame(gtx.Ops)
 			}
 		}
 	}()
 	app.Main()
+}
+
+// END QUEUE OMIT
+
+type Button struct {
+	pressed bool
+}
+
+// START OMIT
+func (b *Button) Layout(gtx *layout.Context) {
+	for _, e := range gtx.Events(b) { // HLevent
+		if e, ok := e.(pointer.Event); ok { // HLevent
+			switch e.Type { // HLevent
+			case pointer.Press: // HLevent
+				b.pressed = true // HLevent
+			case pointer.Release: // HLevent
+				b.pressed = false // HLevent
+			}
+		}
+	}
+	th := material.NewTheme()
+
+	col := color.RGBA{A: 0xff, R: 0xff}
+	if b.pressed {
+		col = color.RGBA{A: 0xff, G: 0xff}
+	}
+	pointer.Rect( // HLevent
+		image.Rectangle{Max: image.Point{X: 500, Y: 500}}, // HLevent
+	).Add(gtx.Ops) // HLevent
+	pointer.InputOp{Key: b}.Add(gtx.Ops) // HLevent
+	drawSquare(gtx.Ops, col)
+	th.H6(text).Layout(gtx)
+}
+
+// END OMIT
+
+func drawSquare(ops *op.Ops, color color.RGBA) {
+	square := f32.Rectangle{
+		Max: f32.Point{X: 500, Y: 500},
+	}
+	paint.ColorOp{Color: color}.Add(ops)
+	paint.PaintOp{Rect: square}.Add(ops)
 }
