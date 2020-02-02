@@ -3,10 +3,10 @@
 package framework
 
 import (
-	"gioui.org/layout"
-	"gioui.org/text"
-	"gioui.org/unit"
-	"gioui.org/widget"
+	"github.com/gop9/olt/gio/layout"
+	"github.com/gop9/olt/gio/text"
+	"github.com/gop9/olt/gio/unit"
+	"github.com/gop9/olt/gio/widget"
 )
 
 type RadioButton struct {

@@ -5,12 +5,12 @@ package framework
 import (
 	"image"
 
-	"gioui.org/f32"
-	"gioui.org/layout"
-	"gioui.org/op"
-	"gioui.org/op/clip"
-	"gioui.org/op/paint"
-	"gioui.org/unit"
+	"github.com/gop9/olt/gio/f32"
+	"github.com/gop9/olt/gio/layout"
+	"github.com/gop9/olt/gio/op"
+	"github.com/gop9/olt/gio/op/clip"
+	"github.com/gop9/olt/gio/op/paint"
+	"github.com/gop9/olt/gio/unit"
 )
 
 // Image is a widget that displays an image.

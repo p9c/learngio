@@ -1,18 +1,18 @@
 package framework
 
 import (
-	"gioui.org/io/pointer"
-	"gioui.org/layout"
-	"gioui.org/unit"
+	"github.com/gop9/olt/gio/io/pointer"
+	"github.com/gop9/olt/gio/layout"
+	"github.com/gop9/olt/gio/unit"
 	"image"
 	"image/color"
 
-	"gioui.org/f32"
-	"gioui.org/op"
-	"gioui.org/op/clip"
-	"gioui.org/op/paint"
-	"gioui.org/text"
-	"gioui.org/widget"
+	"github.com/gop9/olt/gio/f32"
+	"github.com/gop9/olt/gio/op"
+	"github.com/gop9/olt/gio/op/clip"
+	"github.com/gop9/olt/gio/op/paint"
+	"github.com/gop9/olt/gio/text"
+	"github.com/gop9/olt/gio/widget"
 )
 
 type Button struct {

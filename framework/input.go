@@ -1,12 +1,12 @@
 package framework
 
 import (
-	"gioui.org/io/pointer"
-	"gioui.org/layout"
-	"gioui.org/text"
-	"gioui.org/unit"
-	"gioui.org/widget"
-	"gioui.org/widget/material"
+	"github.com/gop9/olt/gio/io/pointer"
+	"github.com/gop9/olt/gio/layout"
+	"github.com/gop9/olt/gio/text"
+	"github.com/gop9/olt/gio/unit"
+	"github.com/gop9/olt/gio/widget"
+	"github.com/gop9/olt/gio/widget/material"
 	"github.com/p9c/learngio/helpers"
 	"image"
 	"strconv"
