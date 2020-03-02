@@ -1,0 +1,48 @@
+package main
+
+import (
+	"github.com/p9c/learngio/examples/html/thdwb/ketchup"
+	"github.com/p9c/learngio/examples/html/thdwb/mustard"
+)
+
+func main() {
+	url := "./examples/01.html"
+	//resource := sauce.GetResource(url)
+	//htmlString := string(resource.Body)
+	parsedDocument := ketchup.ParseDocument(`<html>
+
+<head>
+  <title>Hello, world!</title>
+</head>
+
+<body>
+  <h1 id="one" class="one">Hello, world!</h1>
+  <p>Lorem ipsum, dolor <br />
+sit amet.</p>
+  <h1 id="one" class="one">Hello, world!</h1>
+  <p>Lorem ipsum, dolor <br />
+sit amet.sit amet.sit amet.sit amet.</p>
+
+  <div class="two" style="color: #ff00ff">
+    <br/>
+    <p>Lorem ipsum, dolor sit amet.</p>
+    <div>
+      <h2 style="color: aqua; font-size: 40px">
+        opa
+      </h2>
+      <div>
+        <b style="color: #800080">DIV</b>
+      </div>
+      <i>hahahahha</i>
+    </div>
+  </div>
+  <div>
+    <p>Lorem ipsum, dolor sit amet.</p>
+    <h1>Hello, world!</h1>
+  </div>
+</body>
+
+</html>`)
+
+	mustard.RenderDocument(parsedDocument, url)
+}

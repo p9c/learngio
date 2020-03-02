@@ -130,7 +130,7 @@ func (s *Slider) Layout(gtx *layout.Context) {
 	colorBg := helpers.HexARGB("ff30cfcf")
 	colorBorder := helpers.HexARGB("ffcf3030")
 	border := unit.Dp(0)
-	var position float32 = 0
+	var position float32 = -99
 	if s.pressed {
 		position = s.Position
 		colorBg = helpers.HexARGB("ffcf30cf")

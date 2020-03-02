@@ -8,7 +8,6 @@ import (
 	"github.com/gop9/olt/gio/layout"
 	"github.com/gop9/olt/gio/op"
 	"github.com/gop9/olt/gio/op/paint"
-	"github.com/gop9/olt/gio/widget/material"
 	"image"
 	"image/color"
 )
@@ -20,6 +19,7 @@ func main() {
 	go func() {
 		w := app.NewWindow()
 		button := new(Button)
+		//th := material.NewTheme()
 		gtx := layout.NewContext(w.Queue())
 		for e := range w.Events() {
 			if e, ok := e.(system.FrameEvent); ok {
@@ -51,7 +51,6 @@ func (b *Button) Layout(gtx *layout.Context) {
 			}
 		}
 	}
-	th := material.NewTheme()
 
 	col := color.RGBA{A: 0xff, R: 0xff}
 	if b.pressed {
@@ -62,7 +61,8 @@ func (b *Button) Layout(gtx *layout.Context) {
 	).Add(gtx.Ops) // HLevent
 	pointer.InputOp{Key: b}.Add(gtx.Ops) // HLevent
 	drawSquare(gtx.Ops, col)
-	th.H6(text).Layout(gtx)
+	//th.H6(text).Layout(gtx)
+
 }
 
 // END OMIT

@@ -11,13 +11,14 @@ import (
 )
 
 func main() {
+	gofont.Register()
+	th := material.NewTheme()
 	go func() {
 		w := app.NewWindow()
-		gofont.Register()
-		th := material.NewTheme()
 		// START INIT OMIT
 		list := &layout.List{
-			Axis: layout.Vertical,
+			Axis:        layout.Vertical,
+			ScrollToEnd: true,
 		}
 		gtx := layout.NewContext(w.Queue())
 		// END INIT OMIT
