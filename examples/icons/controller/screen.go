@@ -7,9 +7,11 @@ import (
 	"github.com/p9c/learngio/examples/icons/model"
 )
 
-func Colors() *model.Colors {
-	return &model.Colors{
+func Colors() model.Colors {
+	return model.Colors{
 		"light":  "ffcfcfcf",
+		"yellow": "ffcfcf30",
+		"purple": "ff803080",
 		"red":    "ffcf3030",
 		"green":  "ff30cf30",
 		"blue":   "ff3080cf",
@@ -36,12 +38,16 @@ func NewScreen() *model.Screen {
 		},
 		NavButtonsGroup:   new(widget.Enum),
 		BgColorLight:      new(widget.Button),
+		BgColorYellow:     new(widget.Button),
+		BgColorPurple:     new(widget.Button),
 		BgColorRed:        new(widget.Button),
 		BgColorBlue:       new(widget.Button),
 		BgColorDark:       new(widget.Button),
 		BgColorOrange:     new(widget.Button),
 		BgColorGreen:      new(widget.Button),
 		AccentColorLight:  new(widget.Button),
+		AccentColorYellow: new(widget.Button),
+		AccentColorPurple: new(widget.Button),
 		AccentColorRed:    new(widget.Button),
 		AccentColorBlue:   new(widget.Button),
 		AccentColorDark:   new(widget.Button),

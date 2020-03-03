@@ -43,24 +43,28 @@ func main() {
 							}),
 							layout.Rigid(func() {
 								layout.Flex{Axis: layout.Horizontal}.Layout(gtx,
-									renderColors(gtx, th, scr.BgColorLight, scr, "bg", "ffcfcfcf"),
-									renderColors(gtx, th, scr.BgColorRed, scr, "bg", "ffcf3030"),
-									renderColors(gtx, th, scr.BgColorBlue, scr, "bg", "ff3080cf"),
-									renderColors(gtx, th, scr.BgColorDark, scr, "bg", "ff303030"),
-									renderColors(gtx, th, scr.BgColorOrange, scr, "bg", "ffcf8030"),
-									renderColors(gtx, th, scr.BgColorGreen, scr, "bg", "ff30cf30"))
+									renderColors(gtx, th, scr.BgColorLight, scr, "bg", scr.Colors["light"]),
+									renderColors(gtx, th, scr.BgColorYellow, scr, "bg", scr.Colors["yellow"]),
+									renderColors(gtx, th, scr.BgColorPurple, scr, "bg", scr.Colors["purple"]),
+									renderColors(gtx, th, scr.BgColorRed, scr, "bg", scr.Colors["red"]),
+									renderColors(gtx, th, scr.BgColorBlue, scr, "bg", scr.Colors["blue"]),
+									renderColors(gtx, th, scr.BgColorDark, scr, "bg", scr.Colors["dark"]),
+									renderColors(gtx, th, scr.BgColorOrange, scr, "bg", scr.Colors["orange"]),
+									renderColors(gtx, th, scr.BgColorGreen, scr, "bg", scr.Colors["green"]))
 							}),
 							layout.Rigid(func() {
 								th.Body1("Accent").Layout(gtx)
 							}),
 							layout.Rigid(func() {
 								layout.Flex{Axis: layout.Horizontal}.Layout(gtx,
-									renderColors(gtx, th, scr.AccentColorLight, scr, "accent", "ffcfcfcf"),
-									renderColors(gtx, th, scr.AccentColorRed, scr, "accent", "ffcf3030"),
-									renderColors(gtx, th, scr.AccentColorBlue, scr, "accent", "ff3080cf"),
-									renderColors(gtx, th, scr.AccentColorDark, scr, "accent", "ff303030"),
-									renderColors(gtx, th, scr.AccentColorOrange, scr, "accent", "ffcf8030"),
-									renderColors(gtx, th, scr.AccentColorGreen, scr, "accent", "ff30cf30"))
+									renderColors(gtx, th, scr.AccentColorLight, scr, "accent", scr.Colors["light"]),
+									renderColors(gtx, th, scr.AccentColorYellow, scr, "accent", scr.Colors["yellow"]),
+									renderColors(gtx, th, scr.AccentColorPurple, scr, "accent", scr.Colors["purple"]),
+									renderColors(gtx, th, scr.AccentColorRed, scr, "accent", scr.Colors["red"]),
+									renderColors(gtx, th, scr.AccentColorBlue, scr, "accent", scr.Colors["blue"]),
+									renderColors(gtx, th, scr.AccentColorDark, scr, "accent", scr.Colors["dark"]),
+									renderColors(gtx, th, scr.AccentColorOrange, scr, "accent", scr.Colors["orange"]),
+									renderColors(gtx, th, scr.AccentColorGreen, scr, "accent", scr.Colors["green"]))
 							}),
 							layout.Rigid(func() {
 								DrawRectangle(gtx, 160, gtx.Constraints.Height.Max, helpers.HexARGB(scr.AccentColor))
