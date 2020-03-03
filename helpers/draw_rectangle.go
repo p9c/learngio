@@ -4,11 +4,11 @@ import (
 	"image"
 	"image/color"
 
-	"github.com/gop9/olt/gio/f32"
-	"github.com/gop9/olt/gio/layout"
-	"github.com/gop9/olt/gio/op/clip"
-	"github.com/gop9/olt/gio/op/paint"
-	"github.com/gop9/olt/gio/unit"
+	"gioui.org/f32"
+	"gioui.org/layout"
+	"gioui.org/op/clip"
+	"gioui.org/op/paint"
+	"gioui.org/unit"
 )
 
 func DrawRectangle(gtx *layout.Context, w, h int, color color.RGBA, borderRadius [4]float32, inset unit.Value) {

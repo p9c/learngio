@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
-	"github.com/gop9/olt/gio/app"
-	"github.com/gop9/olt/gio/font/gofont"
-	"github.com/gop9/olt/gio/io/pointer"
-	"github.com/gop9/olt/gio/io/system"
-	"github.com/gop9/olt/gio/layout"
-	"github.com/gop9/olt/gio/unit"
-	"github.com/gop9/olt/gio/widget/material"
+	"gioui.org/app"
+	"gioui.org/font/gofont"
+	"gioui.org/io/pointer"
+	"gioui.org/io/system"
+	"gioui.org/layout"
+	"gioui.org/unit"
 	"github.com/p9c/learngio/helpers"
+	"github.com/p9c/pod/cmd/gui/theme"
 	"image"
 )
 
@@ -28,7 +28,7 @@ func main() {
 	go func() {
 		w := app.NewWindow()
 		gofont.Register()
-		th := material.NewTheme()
+		th := theme.NewDuoUItheme()
 
 		slider := &Slider{
 			Name: "increase",
@@ -60,7 +60,7 @@ func main() {
 
 										in := layout.UniformInset(unit.Dp(0))
 										in.Layout(gtx, func() {
-											layout.Align(layout.Center).Layout(gtx, func() {
+											layout.Center.Layout(gtx, func() {
 												th.H3(fmt.Sprint(itemValue.i)).Layout(gtx)
 											})
 										})
@@ -71,7 +71,7 @@ func main() {
 
 										in := layout.UniformInset(unit.Dp(0))
 										in.Layout(gtx, func() {
-											layout.Align(layout.Center).Layout(gtx, func() {
+											layout.Center.Layout(gtx, func() {
 												th.H3(fmt.Sprint(slider.Position)).Layout(gtx)
 											})
 										})
