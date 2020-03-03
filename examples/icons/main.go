@@ -11,29 +11,20 @@ import (
 	"gioui.org/unit"
 	"gioui.org/widget"
 	"gioui.org/widget/material"
-	"github.com/p9c/learngio/examples/icons/ico"
+	"github.com/p9c/learngio/examples/icons/controller"
+	"github.com/p9c/learngio/examples/icons/model"
+	"github.com/p9c/learngio/helpers"
 	"image"
 	"image/color"
 	"sort"
 )
 
-var (
-	navList = &layout.List{
-		Axis:      layout.Vertical,
-		Alignment: layout.Start,
-	}
-	list = &layout.List{
-		Axis:      layout.Vertical,
-		Alignment: layout.Start,
-	}
-	navButtonsGroup = new(widget.Enum)
-	icoBank         = ico.NewIco()
-	groupsIco       = icoBank.GroupsIco()
-)
-
 func main() {
 	gofont.Register()
 	th := material.NewTheme()
+
+	scr := controller.NewScreen()
+
 	go func() {
 		w := app.NewWindow(
 			app.Size(unit.Dp(400), unit.Dp(800)),
@@ -43,23 +34,51 @@ func main() {
 		for e := range w.Events() {
 			if e, ok := e.(system.FrameEvent); ok {
 				gtx.Reset(e.Config, e.Size)
+				DrawRectangle(gtx, gtx.Constraints.Width.Max, gtx.Constraints.Height.Max, helpers.HexARGB(scr.BgColor))
 				layout.Flex{}.Layout(gtx,
 					layout.Rigid(func() {
-						DrawRectangle(gtx, 160, gtx.Constraints.Height.Max, color.RGBA{A: 0xff, R: 0xcf, G: 0x30, B: 0x30})
-						navList.Layout(gtx, len(groupsIco), func(i int) {
-							layout.UniformInset(unit.Dp(16)).Layout(gtx, func() {
-								th.RadioButton(groupsIco[i], groupsIco[i]).Layout(gtx, navButtonsGroup)
-							})
-						})
+						layout.Flex{Axis: layout.Vertical}.Layout(gtx,
+							layout.Rigid(func() {
+								th.Body1("Background").Layout(gtx)
+							}),
+							layout.Rigid(func() {
+								layout.Flex{Axis: layout.Horizontal}.Layout(gtx,
+									renderColors(gtx, th, scr.BgColorLight, scr, "bg", "ffcfcfcf"),
+									renderColors(gtx, th, scr.BgColorRed, scr, "bg", "ffcf3030"),
+									renderColors(gtx, th, scr.BgColorBlue, scr, "bg", "ff3080cf"),
+									renderColors(gtx, th, scr.BgColorDark, scr, "bg", "ff303030"),
+									renderColors(gtx, th, scr.BgColorOrange, scr, "bg", "ffcf8030"),
+									renderColors(gtx, th, scr.BgColorGreen, scr, "bg", "ff30cf30"))
+							}),
+							layout.Rigid(func() {
+								th.Body1("Accent").Layout(gtx)
+							}),
+							layout.Rigid(func() {
+								layout.Flex{Axis: layout.Horizontal}.Layout(gtx,
+									renderColors(gtx, th, scr.AccentColorLight, scr, "accent", "ffcfcfcf"),
+									renderColors(gtx, th, scr.AccentColorRed, scr, "accent", "ffcf3030"),
+									renderColors(gtx, th, scr.AccentColorBlue, scr, "accent", "ff3080cf"),
+									renderColors(gtx, th, scr.AccentColorDark, scr, "accent", "ff303030"),
+									renderColors(gtx, th, scr.AccentColorOrange, scr, "accent", "ffcf8030"),
+									renderColors(gtx, th, scr.AccentColorGreen, scr, "accent", "ff30cf30"))
+							}),
+							layout.Rigid(func() {
+								DrawRectangle(gtx, 160, gtx.Constraints.Height.Max, helpers.HexARGB(scr.AccentColor))
+								scr.NavList.Layout(gtx, len(scr.GroupsIco), func(i int) {
+									layout.UniformInset(unit.Dp(16)).Layout(gtx, func() {
+										th.RadioButton(scr.GroupsIco[i], scr.GroupsIco[i]).Layout(gtx, scr.NavButtonsGroup)
+									})
+								})
+							}))
 					}),
 					layout.Flexed(1, func() {
-						icoS := make([]string, 0, len(icoBank[navButtonsGroup.Value(gtx)]))
-						for k := range icoBank[navButtonsGroup.Value(gtx)] {
+						icoS := make([]string, 0, len(scr.IcoBank[scr.NavButtonsGroup.Value(gtx)]))
+						for k := range scr.IcoBank[scr.NavButtonsGroup.Value(gtx)] {
 							icoS = append(icoS, k)
 						}
 						sort.Strings(icoS)
-						list.Layout(gtx, len(icoBank[navButtonsGroup.Value(gtx)]), func(i int) {
-							layout.UniformInset(unit.Dp(16)).Layout(gtx, renderIcon(gtx, th, icoBank[navButtonsGroup.Value(gtx)][icoS[i]], icoS[i]))
+						scr.List.Layout(gtx, len(scr.IcoBank[scr.NavButtonsGroup.Value(gtx)]), func(i int) {
+							layout.UniformInset(unit.Dp(16)).Layout(gtx, renderIcon(gtx, th, scr.IcoBank[scr.NavButtonsGroup.Value(gtx)][icoS[i]], scr, icoS[i]))
 						})
 					}))
 				e.Frame(gtx.Ops)
@@ -69,7 +88,7 @@ func main() {
 	app.Main()
 }
 
-func renderIcon(gtx *layout.Context, th *material.Theme, icon *material.Icon, iconLabel string) func() {
+func renderIcon(gtx *layout.Context, th *material.Theme, icon *material.Icon, scr *model.Screen, iconLabel string) func() {
 	return func() {
 		layout.Flex{
 			Axis:    layout.Vertical,
@@ -81,11 +100,11 @@ func renderIcon(gtx *layout.Context, th *material.Theme, icon *material.Icon, ic
 					Spacing: layout.SpaceBetween,
 				}.Layout(gtx,
 					layout.Rigid(func() {
-						icon.Color = color.RGBA{A: 0xff, R: 0xcf, G: 0x30, B: 0x30}
-						icon.Layout(gtx, unit.Dp(float32(48)))
+						icon.Color = helpers.HexARGB(scr.AccentColor)
+						icon.Layout(gtx, unit.Dp(float32(scr.IconSize)))
 					}),
 					layout.Rigid(func() {
-						th.H2(iconLabel).Layout(gtx)
+						th.Label(th.TextSize.Scale(14.0/float32(scr.TextSize)), iconLabel).Layout(gtx)
 					}),
 				)
 			}),
@@ -95,17 +114,24 @@ func renderIcon(gtx *layout.Context, th *material.Theme, icon *material.Icon, ic
 	}
 }
 
-func renderIconFlex(gtx *layout.Context, th *material.Theme, icon *material.Icon, iconLabel string) layout.FlexChild {
+func renderColors(gtx *layout.Context, th *material.Theme, controllerButton *widget.Button, scr *model.Screen, part, color string) layout.FlexChild {
 	return layout.Rigid(func() {
 		layout.Flex{
 			Spacing: layout.SpaceBetween,
 		}.Layout(gtx,
 			layout.Rigid(func() {
-				icon.Color = color.RGBA{A: 0xff, R: 0xcf, G: 0x30, B: 0x30}
-				icon.Layout(gtx, unit.Dp(float32(32)))
-			}),
-			layout.Rigid(func() {
-				th.H6(iconLabel).Layout(gtx)
+				var linkButton material.Button
+				linkButton = th.Button("")
+				linkButton.Background = helpers.HexARGB(color)
+				for controllerButton.Clicked(gtx) {
+					switch part {
+					case "bg":
+						scr.BgColor = color
+					case "accent":
+						scr.AccentColor = color
+					}
+				}
+				linkButton.Layout(gtx, controllerButton)
 			}),
 		)
 	})
