@@ -9,22 +9,16 @@ import (
 )
 
 func main() {
-	//itemValue := item{
-	//	i: 0,
-	//}
-	panel := onePanel()
+	gofont.Register()
+	th := material.NewTheme()
+	panel := onePanel(th)
 	go func() {
 		w := app.NewWindow()
-		gofont.Register()
-		th := material.NewTheme()
-		//sl := slider(th, 17)
 		gtx := layout.NewContext(w.Queue())
-		panel.listObjects = listObjects(gtx, th)
 		for e := range w.Events() {
 			if e, ok := e.(system.FrameEvent); ok {
 				gtx.Reset(e.Config, e.Size)
 				panel.Layout(gtx, th)
-				//fmt.Println(panel.listHeight)
 				e.Frame(gtx.Ops)
 			}
 		}

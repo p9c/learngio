@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"gioui.org/layout"
 	"gioui.org/widget/material"
-	"github.com/p9c/learngio/examples/list"
 )
 
 type item struct {
@@ -16,51 +15,58 @@ func (it *item) doSlide(n int) {
 }
 
 type Panel struct {
-	Name        string
-	listLayout  *layout.List
-	listObjects []func()
-	listHeight  int
+	Name              string
+	totalHeight       int
+	visibleHeight     int
+	panelContent      *layout.List
+	panelObject       []func()
+	panelObjectHeight int
+	scrollBar         *ScrollBar
 }
 
-func onePanel() *Panel {
+func onePanel(th *material.Theme) *Panel {
 	return &Panel{
 		Name: "OnePanel",
-		listLayout: &list.List{
+		panelContent: &layout.List{
 			Axis:        layout.Vertical,
 			ScrollToEnd: false,
 		},
+		scrollBar: scrollBar(th),
 	}
 }
 
 func (p *Panel) Layout(gtx *layout.Context, th *material.Theme) {
-
-	//for _, lo := range p.listObjects{
-	//	fmt.Println("Normal:")
-	//	fmt.Println(gtx.Dimensions.Size.Y)
-	//}
-
 	layout.Flex{
 		Axis:    layout.Horizontal,
 		Spacing: layout.SpaceBetween,
 	}.Layout(gtx,
-		layout.Flexed(1, func() {
-			p.drawList(gtx)
-		}),
+		layout.Flexed(1, p.panelLayout(gtx, th, testContent(gtx, th))),
 		layout.Rigid(func() {
-			p.slider(th).Layout(gtx, p.listLayout, len(p.listObjects))
+			p.SliderLayout(gtx)
 		}),
 	)
+
+	totalOffset := p.totalHeight - p.visibleHeight
+
+	scrollUnit := float32(p.scrollBar.body.Height) / float32(totalOffset)
+
+	p.scrollBar.body.Cursor = float32(p.panelContent.Position.Offset) * scrollUnit
+	//p.scrollBar.body.Cursor = float32(p.panelContent.Position.Offset)
+	fmt.Println("totalOffset:", totalOffset)
+	fmt.Println("scrollUnit:", scrollUnit)
+
+	fmt.Println("cursor:", p.scrollBar.body.Cursor)
+	fmt.Println("visibleHeight:", p.visibleHeight)
+
+	fmt.Println("total:", p.totalHeight)
+	fmt.Println("offset:", p.panelContent.Position.Offset)
 }
 
-func (p *Panel) drawList(gtx *layout.Context) {
-	p.listHeight = 0
-	p.listLayout.Layout(gtx, len(p.listObjects), func(i int) {
-		p.listObjects[i]()
-		p.listHeight = p.listHeight + gtx.Dimensions.Size.Y
-		fmt.Println(p.listHeight)
-		fmt.Println(gtx.Dimensions.Size.Y)
-	})
-}
+//func (p *Panel) drawList(gtx *layout.Context) {
+//	p.listLayout.Layout(gtx, len(p.listObjects), func(i int) {
+//		p.listObjects[i]()
+//	})
+//}
 
 func (p *Panel) calculateListHeight(gtx *layout.Context) {
 

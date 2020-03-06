@@ -1,7 +1,6 @@
 package main
 
 import (
-	"container/list"
 	"gioui.org/io/pointer"
 	"gioui.org/layout"
 	"gioui.org/unit"
@@ -16,28 +15,29 @@ var (
 	widgetButtonDown = new(widget.Button)
 )
 
-type Slider struct {
+type ScrollBar struct {
 	ColorBg      string
 	BorderRadius [4]float32
 	OperateValue interface{}
-	Height       float32
-	body         *SliderBody
-	up           *SliderButton
-	down         *SliderButton
+	//Height       float32
+	body *ScrollBarBody
+	up   *ScrollBarButton
+	down *ScrollBarButton
 }
 
-type SliderBody struct {
+type ScrollBarBody struct {
 	pressed      bool
 	Do           func(interface{})
 	ColorBg      string
 	Position     float32
 	Cursor       float32
 	OperateValue interface{}
-	Height       float32
+	Height       int
+	CursorHeight float32
 	Icon         material.Icon
 }
 
-type SliderButton struct {
+type ScrollBarButton struct {
 	icon        *material.Icon
 	button      material.IconButton
 	Height      float32
@@ -51,19 +51,19 @@ type SliderButton struct {
 	iconPadding float32
 }
 
-func (p *Panel) slider(th *material.Theme) *Slider {
+func scrollBar(th *material.Theme) *ScrollBar {
 	iconGrab, _ := material.NewIcon(icons.NavigationMenu)
 	iconUp, _ := material.NewIcon(icons.NavigationArrowDropUp)
 	iconDown, _ := material.NewIcon(icons.NavigationArrowDropDown)
-	//itemValue := item{
-	//	i: 0,
-	//}
-	up := &SliderButton{
+	itemValue := item{
+		i: 0,
+	}
+	up := &ScrollBarButton{
 		icon:        iconUp,
 		button:      th.IconButton(iconUp),
 		Height:      16,
 		iconColor:   "ff445588",
-		iconBgColor: "ffff882266",
+		iconBgColor: "ff882266",
 		insetTop:    0,
 		insetRight:  0,
 		insetBottom: 0,
@@ -71,38 +71,38 @@ func (p *Panel) slider(th *material.Theme) *Slider {
 		iconSize:    32,
 		iconPadding: 0,
 	}
-	down := &SliderButton{
+	down := &ScrollBarButton{
 		icon:        iconUp,
 		button:      th.IconButton(iconDown),
 		Height:      16,
 		iconSize:    16,
 		iconColor:   "ff445588",
-		iconBgColor: "ffff882266",
+		iconBgColor: "ff882266",
 	}
-	body := &SliderBody{
-		pressed: false,
-		ColorBg: "",
-		//Position: 0,
-		//Cursor:   0,
-		Icon: *iconGrab,
-		//Do: func(n interface{}) {
-		//	itemValue.doSlide(n.(int))
-		//},
+	body := &ScrollBarBody{
+		pressed:  false,
+		ColorBg:  "",
+		Position: 0,
+		Cursor:   0,
+		Icon:     *iconGrab,
+		Do: func(n interface{}) {
+			itemValue.doSlide(n.(int))
+		},
 		OperateValue: 1,
-		Height:       30,
+		CursorHeight: 30,
 	}
-	return &Slider{
+	return &ScrollBar{
 		ColorBg:      "ff885566",
 		BorderRadius: [4]float32{},
 		OperateValue: 1,
 		//ListPosition: 0,
-		Height: 16,
-		body:   body,
-		up:     up,
-		down:   down,
+		//Height: 16,
+		body: body,
+		up:   up,
+		down: down,
 	}
 }
-func (s *SliderButton) sliderButton() *material.IconButton {
+func (s *ScrollBarButton) scrollBarButton() *material.IconButton {
 	button := s.button
 	button.Inset.Top = unit.Dp(0)
 	button.Inset.Bottom = unit.Dp(0)
@@ -112,64 +112,54 @@ func (s *SliderButton) sliderButton() *material.IconButton {
 	button.Padding = unit.Dp(0)
 	return &button
 }
-func (s *Slider) Layout(gtx *layout.Context, list *list.List, listLenght int) {
+func (p *Panel) SliderLayout(gtx *layout.Context) {
 	layout.Flex{
-		Axis:    layout.Vertical,
-		Spacing: layout.SpaceBetween,
+		Axis: layout.Vertical,
 	}.Layout(gtx,
 		layout.Rigid(func() {
 			for widgetButtonUp.Clicked(gtx) {
-				if list.Position.First > 0 {
-					list.Position.First = list.Position.First - 1
-				}
+				p.panelContent.Position.Offset = p.panelContent.Position.Offset - 1
 			}
-
-			s.up.sliderButton().Layout(gtx, widgetButtonUp)
+			p.scrollBar.up.scrollBarButton().Layout(gtx, widgetButtonUp)
 		}),
 		layout.Flexed(1, func() {
-			s.body.Layout(gtx, list, listLenght)
+			p.bodyLayout(gtx)
 		}),
 		layout.Rigid(func() {
 			for widgetButtonDown.Clicked(gtx) {
-				if list.Position.First < listLenght {
-					list.Position.First = list.Position.First + 1
-				}
+				p.panelContent.Position.Offset = p.panelContent.Position.Offset + 1
 			}
-			s.down.sliderButton().Layout(gtx, widgetButtonDown)
+			p.scrollBar.down.scrollBarButton().Layout(gtx, widgetButtonDown)
 		}),
 	)
 }
 
-func (s *SliderBody) Layout(gtx *layout.Context, list *layout.List, ll int) {
-	for _, e := range gtx.Events(s) {
+func (p *Panel) bodyLayout(gtx *layout.Context) {
+	for _, e := range gtx.Events(p.scrollBar.body) {
 		if e, ok := e.(pointer.Event); ok {
-			s.Position = e.Position.Y
+			p.scrollBar.body.Position = e.Position.Y
 			switch e.Type {
 			case pointer.Press:
-				s.pressed = true
-				s.Do(s.OperateValue)
-				list.Position.First = int(s.Position)
+				p.scrollBar.body.pressed = true
+				p.scrollBar.body.Do(p.scrollBar.body.OperateValue)
+				//list.Position.First = int(s.Position)
 			case pointer.Release:
-				s.pressed = false
+				p.scrollBar.body.pressed = false
 			}
 		}
 	}
 
 	cs := gtx.Constraints
-	//th := material.NewTheme()
-
+	p.scrollBar.body.Height = cs.Height.Max
 	sliderBg := HexARGB("ff558899")
 	colorBg := HexARGB("ff30cfcf")
 	colorBorder := HexARGB("ffcf3030")
 	border := unit.Dp(0)
 
-	//listUnit := float32(cs.Height.Max) / float32(ll)
-	//fmt.Println(listUnit)
-	if s.pressed {
-		if s.Position >= 0 && s.Position <= (float32(cs.Height.Max)-s.Height) {
-			s.Cursor = s.Position
-			//s.Cursor = s.Position * float32(list.Position.First)
-			list.Position.First = int(s.Position)
+	if p.scrollBar.body.pressed {
+		if p.scrollBar.body.Position >= 0 && p.scrollBar.body.Position <= (float32(cs.Height.Max)-p.scrollBar.body.CursorHeight) {
+			p.scrollBar.body.Cursor = p.scrollBar.body.Position
+			p.panelContent.Position.Offset = int(p.scrollBar.body.Cursor)
 		}
 		colorBg = HexARGB("ffcf30cf")
 		colorBorder = HexARGB("ff303030")
@@ -178,7 +168,7 @@ func (s *SliderBody) Layout(gtx *layout.Context, list *layout.List, ll int) {
 	pointer.Rect(
 		image.Rectangle{Max: image.Point{X: cs.Width.Max, Y: cs.Height.Max}},
 	).Add(gtx.Ops)
-	pointer.InputOp{Key: s}.Add(gtx.Ops)
+	pointer.InputOp{Key: p.scrollBar.body}.Add(gtx.Ops)
 	DrawRectangle(gtx, float32(cs.Width.Max), float32(cs.Height.Max), colorBorder, [4]float32{0, 0, 0, 0}, unit.Dp(0))
 
 	layout.UniformInset(border).Layout(gtx, func() {
@@ -190,14 +180,14 @@ func (s *SliderBody) Layout(gtx *layout.Context, list *layout.List, ll int) {
 				layout.Center.Layout(gtx, func() {
 
 					layout.Inset{
-						Top: unit.Dp(s.Cursor),
+						Top: unit.Dp(p.scrollBar.body.Cursor),
 					}.Layout(gtx, func() {
 						//cs := gtx.Constraints
 
-						DrawRectangle(gtx, float32(30), s.Height, sliderBg, [4]float32{5, 5, 5, 5}, unit.Dp(0))
+						DrawRectangle(gtx, float32(30), p.scrollBar.body.CursorHeight, sliderBg, [4]float32{5, 5, 5, 5}, unit.Dp(0))
 
-						s.Icon.Color = HexARGB("ff554499")
-						s.Icon.Layout(gtx, unit.Px(float32(32)))
+						p.scrollBar.body.Icon.Color = HexARGB("ff554499")
+						p.scrollBar.body.Icon.Layout(gtx, unit.Px(float32(32)))
 					})
 
 				})
