@@ -22,6 +22,7 @@ type Panel struct {
 	panelObject       []func()
 	panelObjectHeight int
 	scrollBar         *ScrollBar
+	scrollUnit        float32
 }
 
 func onePanel(th *material.Theme) *Panel {
@@ -48,12 +49,14 @@ func (p *Panel) Layout(gtx *layout.Context, th *material.Theme) {
 
 	totalOffset := p.totalHeight - p.visibleHeight
 
-	scrollUnit := float32(p.scrollBar.body.Height) / float32(totalOffset)
+	p.scrollUnit = (float32(p.scrollBar.body.Height) - p.scrollBar.body.CursorHeight) / float32(totalOffset)
 
-	p.scrollBar.body.Cursor = float32(p.panelContent.Position.Offset) * scrollUnit
+	p.scrollBar.body.Cursor = float32(p.panelContent.Position.Offset) * p.scrollUnit
 	//p.scrollBar.body.Cursor = float32(p.panelContent.Position.Offset)
+	fmt.Println("bodyHeight:", p.scrollBar.body.Height)
+
 	fmt.Println("totalOffset:", totalOffset)
-	fmt.Println("scrollUnit:", scrollUnit)
+	fmt.Println("scrollUnit:", p.scrollUnit)
 
 	fmt.Println("cursor:", p.scrollBar.body.Cursor)
 	fmt.Println("visibleHeight:", p.visibleHeight)

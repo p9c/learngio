@@ -159,7 +159,7 @@ func (p *Panel) bodyLayout(gtx *layout.Context) {
 	if p.scrollBar.body.pressed {
 		if p.scrollBar.body.Position >= 0 && p.scrollBar.body.Position <= (float32(cs.Height.Max)-p.scrollBar.body.CursorHeight) {
 			p.scrollBar.body.Cursor = p.scrollBar.body.Position
-			p.panelContent.Position.Offset = int(p.scrollBar.body.Cursor)
+			p.panelContent.Position.Offset = int(p.scrollBar.body.Cursor / p.scrollUnit)
 		}
 		colorBg = HexARGB("ffcf30cf")
 		colorBorder = HexARGB("ff303030")
