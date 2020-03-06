@@ -118,7 +118,7 @@ func (p *Panel) SliderLayout(gtx *layout.Context) {
 	}.Layout(gtx,
 		layout.Rigid(func() {
 			for widgetButtonUp.Clicked(gtx) {
-				p.panelContent.Position.Offset = p.panelContent.Position.Offset - 1
+				p.panelContent.Position.Offset = p.panelContent.Position.Offset - int(p.scrollBar.body.CursorHeight)
 			}
 			p.scrollBar.up.scrollBarButton().Layout(gtx, widgetButtonUp)
 		}),
@@ -127,7 +127,7 @@ func (p *Panel) SliderLayout(gtx *layout.Context) {
 		}),
 		layout.Rigid(func() {
 			for widgetButtonDown.Clicked(gtx) {
-				p.panelContent.Position.Offset = p.panelContent.Position.Offset + 1
+				p.panelContent.Position.Offset = p.panelContent.Position.Offset + int(p.scrollBar.body.CursorHeight)
 			}
 			p.scrollBar.down.scrollBarButton().Layout(gtx, widgetButtonDown)
 		}),
@@ -137,7 +137,7 @@ func (p *Panel) SliderLayout(gtx *layout.Context) {
 func (p *Panel) bodyLayout(gtx *layout.Context) {
 	for _, e := range gtx.Events(p.scrollBar.body) {
 		if e, ok := e.(pointer.Event); ok {
-			p.scrollBar.body.Position = e.Position.Y
+			p.scrollBar.body.Position = e.Position.Y - (p.scrollBar.body.CursorHeight / 2)
 			switch e.Type {
 			case pointer.Press:
 				p.scrollBar.body.pressed = true
@@ -186,8 +186,11 @@ func (p *Panel) bodyLayout(gtx *layout.Context) {
 
 						DrawRectangle(gtx, float32(30), p.scrollBar.body.CursorHeight, sliderBg, [4]float32{5, 5, 5, 5}, unit.Dp(0))
 
-						p.scrollBar.body.Icon.Color = HexARGB("ff554499")
-						p.scrollBar.body.Icon.Layout(gtx, unit.Px(float32(32)))
+						layout.Center.Layout(gtx, func() {
+
+							p.scrollBar.body.Icon.Color = HexARGB("ff554499")
+							p.scrollBar.body.Icon.Layout(gtx, unit.Px(float32(32)))
+						})
 					})
 
 				})

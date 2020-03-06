@@ -18,6 +18,7 @@ type Panel struct {
 	Name              string
 	totalHeight       int
 	visibleHeight     int
+	totalOffset       int
 	panelContent      *layout.List
 	panelObject       []func()
 	panelObjectHeight int
@@ -43,19 +44,21 @@ func (p *Panel) Layout(gtx *layout.Context, th *material.Theme) {
 	}.Layout(gtx,
 		layout.Flexed(1, p.panelLayout(gtx, th, testContent(gtx, th))),
 		layout.Rigid(func() {
-			p.SliderLayout(gtx)
+			if p.totalOffset > 0 {
+				p.SliderLayout(gtx)
+			}
 		}),
 	)
 
-	totalOffset := p.totalHeight - p.visibleHeight
+	p.totalOffset = p.totalHeight - p.visibleHeight
 
-	p.scrollUnit = (float32(p.scrollBar.body.Height) - p.scrollBar.body.CursorHeight) / float32(totalOffset)
-
+	p.scrollUnit = float32(p.scrollBar.body.Height) / float32(p.totalHeight)
+	p.scrollBar.body.CursorHeight = p.scrollUnit * float32(p.visibleHeight)
 	p.scrollBar.body.Cursor = float32(p.panelContent.Position.Offset) * p.scrollUnit
 	//p.scrollBar.body.Cursor = float32(p.panelContent.Position.Offset)
 	fmt.Println("bodyHeight:", p.scrollBar.body.Height)
 
-	fmt.Println("totalOffset:", totalOffset)
+	fmt.Println("totalOffset:", p.totalOffset)
 	fmt.Println("scrollUnit:", p.scrollUnit)
 
 	fmt.Println("cursor:", p.scrollBar.body.Cursor)
