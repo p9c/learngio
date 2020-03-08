@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/gop9/olt/gio/f32"
-	"github.com/gop9/olt/gio/op/paint"
+	"gioui.org/f32"
+	"gioui.org/op/paint"
 	"golang.org/x/exp/shiny/iconvg"
 	"image"
 	"image/color"

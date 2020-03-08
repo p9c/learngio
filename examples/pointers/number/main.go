@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
-	"github.com/gop9/olt/gio/app"
-	"github.com/gop9/olt/gio/font/gofont"
-	"github.com/gop9/olt/gio/io/pointer"
-	"github.com/gop9/olt/gio/io/system"
-	"github.com/gop9/olt/gio/layout"
-	"github.com/gop9/olt/gio/text"
-	"github.com/gop9/olt/gio/unit"
-	"github.com/gop9/olt/gio/widget/material"
+	"gioui.org/app"
+	"gioui.org/font/gofont"
+	"gioui.org/io/pointer"
+	"gioui.org/io/system"
+	"gioui.org/layout"
+	"gioui.org/text"
+	"gioui.org/unit"
+	"gioui.org/widget/material"
 	"github.com/p9c/learngio/helpers"
 	"image"
 )

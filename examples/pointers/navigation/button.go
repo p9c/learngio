@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/gop9/olt/gio/io/pointer"
-	"github.com/gop9/olt/gio/layout"
-	"github.com/gop9/olt/gio/unit"
-	"github.com/gop9/olt/gio/widget/material"
+	"gioui.org/io/pointer"
+	"gioui.org/layout"
+	"gioui.org/unit"
+	"gioui.org/widget/material"
 	"github.com/p9c/learngio/helpers"
 	"image"
 	"image/color"
