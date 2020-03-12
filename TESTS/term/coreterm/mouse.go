@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/hajimehoshi/ebiten"
 
-	"github.com/gop9/olt/gio/pointers"
+	"gioui.org/pointers"
 )
 
 func Handler() {

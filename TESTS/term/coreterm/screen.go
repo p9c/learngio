@@ -5,7 +5,7 @@ import (
 	"image"
 	"strings"
 
-	"github.com/gop9/olt/gio/op/paint"
+	"gioui.org/op/paint"
 )
 
 const (

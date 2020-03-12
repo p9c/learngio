@@ -3,10 +3,10 @@ package main
 import (
 	"image/color"
 
-	"github.com/gop9/olt/gio/app"
-	"github.com/gop9/olt/gio/io/system"
-	"github.com/gop9/olt/gio/layout"
-	"github.com/gop9/olt/gio/unit"
+	"gioui.org/app"
+	"gioui.org/io/system"
+	"gioui.org/layout"
+	"gioui.org/unit"
 	"github.com/p9c/learngio/helpers"
 )
 

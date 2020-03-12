@@ -1,13 +1,13 @@
 package main
 
 import (
-	"github.com/gop9/olt/gio/app"
-	"github.com/gop9/olt/gio/font/gofont"
-	"github.com/gop9/olt/gio/io/pointer"
-	"github.com/gop9/olt/gio/io/system"
-	"github.com/gop9/olt/gio/layout"
-	"github.com/gop9/olt/gio/unit"
-	"github.com/gop9/olt/gio/widget/material"
+	"gioui.org/app"
+	"gioui.org/font/gofont"
+	"gioui.org/io/pointer"
+	"gioui.org/io/system"
+	"gioui.org/layout"
+	"gioui.org/unit"
+	"gioui.org/widget/material"
 	"github.com/p9c/learngio/helpers"
 	"image"
 )
@@ -90,33 +90,31 @@ func main() {
 
 						in := layout.UniformInset(unit.Dp(0))
 						in.Layout(gtx, func() {
-							layout.Align(layout.Start).Layout(gtx, func() {
-								//th.H6(fmt.Sprint(itemValue.i)).Layout(gtx)
-								widgets := []func(){
-									func() {
-										layout.Flex{}.Layout(gtx,
-											layout.Rigid(func() {
-												file.Layout(gtx)
-											}),
-											layout.Rigid(func() {
-												edit.Layout(gtx)
-											}),
-											layout.Rigid(func() {
-												help.Layout(gtx)
-											}),
-										)
+							//th.H6(fmt.Sprint(itemValue.i)).Layout(gtx)
+							widgets := []func(){
+								func() {
+									layout.Flex{}.Layout(gtx,
+										layout.Rigid(func() {
+											file.Layout(gtx)
+										}),
+										layout.Rigid(func() {
+											edit.Layout(gtx)
+										}),
+										layout.Rigid(func() {
+											help.Layout(gtx)
+										}),
+									)
 
-									},
+								},
 
-									//func() {
-									//	th.H6(fmt.Sprint(itemValue.i)).Layout(gtx)
-									//},
-								}
-								list.Layout(gtx, len(widgets), func(i int) {
-									layout.UniformInset(unit.Dp(0)).Layout(gtx, widgets[i])
-								})
-
+								//func() {
+								//	th.H6(fmt.Sprint(itemValue.i)).Layout(gtx)
+								//},
+							}
+							list.Layout(gtx, len(widgets), func(i int) {
+								layout.UniformInset(unit.Dp(0)).Layout(gtx, widgets[i])
 							})
+
 						})
 					}),
 					layout.Flexed(1, func() {
@@ -177,10 +175,8 @@ func (b *Button) Layout(gtx *layout.Context) {
 	in.Layout(gtx, func() {
 		helpers.DrawRectangle(gtx, cs.Width.Max, cs.Height.Max, colorBg, b.BorderRadius, unit.Dp(0))
 		//cs := gtx.Constraints
-		layout.Align(layout.Center).Layout(gtx, func() {
-			txt := th.Caption(b.Name)
-			txt.Color = colorText
-			txt.Layout(gtx)
-		})
+		txt := th.Caption(b.Name)
+		txt.Color = colorText
+		txt.Layout(gtx)
 	})
 }

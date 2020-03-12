@@ -2,13 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/gop9/olt/gio/app"
-	"github.com/gop9/olt/gio/f32"
-	"github.com/gop9/olt/gio/io/system"
-	"github.com/gop9/olt/gio/layout"
-	"github.com/gop9/olt/gio/op/paint"
-	"github.com/gop9/olt/gio/unit"
-	"github.com/gop9/olt/gio/widget/material"
+	"gioui.org/app"
+	"gioui.org/f32"
+	"gioui.org/io/system"
+	"gioui.org/layout"
+	"gioui.org/op/paint"
+	"gioui.org/unit"
+	"gioui.org/widget/material"
 	"image"
 	"image/color"
 )
