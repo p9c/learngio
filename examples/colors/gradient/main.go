@@ -2,38 +2,48 @@ package main
 
 import (
 	"gioui.org/app"
+	"gioui.org/f32"
 	"gioui.org/io/system"
 	"gioui.org/layout"
+	"gioui.org/op/paint"
 	"gioui.org/unit"
-	"github.com/p9c/learngio/helpers"
 	"image"
 	"image/color"
 )
 
 func main() {
+	//th := material.NewTheme()
 	go func() {
-		w := app.NewWindow()
+		w := app.NewWindow(
+			app.Size(unit.Dp(400), unit.Dp(800)),
+			app.Title("ParallelCoin"),
+		)
 		gtx := layout.NewContext(w.Queue())
 		for e := range w.Events() {
+
 			if e, ok := e.(system.FrameEvent); ok {
 				gtx.Reset(e.Config, e.Size)
-				layout.Flex{
-					Axis:    layout.Horizontal,
-					Spacing: layout.SpaceSides,
-				}.Layout(gtx,
-					layout.Flexed(0.5, func() {
-						layout.Flex{
-							Axis:    layout.Vertical,
-							Spacing: layout.SpaceSides,
-						}.Layout(gtx,
-							layout.Flexed(0.5, func() {
-								cs := gtx.Constraints
-								helpers.DrawRectangle(gtx, cs.Width.Max, cs.Height.Max, helpers.HexARGB("30303030"), [4]float32{0, 0, 0, 0}, unit.Dp(0))
 
-								m := image.NewRGBA(image.Rect(0, 0, cs.Width.Max, cs.Height.Max))
-								drawGradient(*m)
-							}),
-						)
+				layout.Flex{
+					Axis: layout.Horizontal,
+				}.Layout(gtx,
+					layout.Flexed(1, func() {
+						width := gtx.Constraints.Width.Max
+						height := gtx.Constraints.Height.Max
+						m := image.NewRGBA(image.Rect(0, 0, width, height))
+						drawGradient(*m)
+
+						addrQR := paint.NewImageOp(m)
+						//sz := gtx.Constraints.Width.Constrain(gtx.Px(unit.Dp(100)))
+						addrQR.Add(gtx.Ops)
+						paint.PaintOp{
+							Rect: f32.Rectangle{
+								Max: f32.Point{
+									X: float32(width), Y: float32(height),
+								},
+							},
+						}.Add(gtx.Ops)
+						gtx.Dimensions.Size = image.Point{X: width, Y: height}
 					}),
 				)
 				e.Frame(gtx.Ops)

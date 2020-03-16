@@ -39,7 +39,7 @@ func (t *Table) tableLayout(gtx *layout.Context, th *material.Theme) {
 		layout.Stacked(func() {
 			cs.Width.Min = hmin
 			cs.Height.Min = vmin
-			layout.Align(layout.Center).Layout(gtx, func() {
+			layout.Center.Layout(gtx, func() {
 				layout.Inset{Top: unit.Dp(t.Padding[0]), Bottom: unit.Dp(t.Padding[1]), Left: unit.Dp(t.Padding[2]), Right: unit.Dp(t.Padding[3])}.Layout(gtx, func() {
 
 					layout.Stack{Alignment: layout.Center}.Layout(gtx,
@@ -57,7 +57,7 @@ func (t *Table) tableLayout(gtx *layout.Context, th *material.Theme) {
 						layout.Stacked(func() {
 							cs.Width.Min = hmin
 							cs.Height.Min = vmin
-							layout.Align(layout.Center).Layout(gtx, func() {
+							layout.Center.Layout(gtx, func() {
 								//layout.Inset{Top: unit.Dp(15), Bottom: unit.Dp(15), Left: unit.Dp(15), Right: unit.Dp(15)}.Layout(gtx, func() {
 
 								// Content <<<
