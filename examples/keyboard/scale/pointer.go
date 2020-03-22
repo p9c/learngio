@@ -70,7 +70,7 @@ func main() {
 
 										in := layout.UniformInset(unit.Dp(0))
 										in.Layout(gtx, func() {
-											layout.Align(layout.Center).Layout(gtx, func() {
+											layout.Center.Layout(gtx, func() {
 												th.H3(fmt.Sprint(itemValue.i)).Layout(gtx)
 											})
 										})
@@ -138,18 +138,18 @@ func (b *Note) Layout(gtx *layout.Context) {
 		//cs := gtx.Constraints
 		layout.Flex{Axis: layout.Vertical}.Layout(gtx,
 			layout.Flexed(0.3, func() {
-				layout.Align(layout.Center).Layout(gtx, func() {
+				layout.Center.Layout(gtx, func() {
 					th.H6(b.Name).Layout(gtx)
 				})
 			}),
 			layout.Flexed(0.5, func() {
 				//reset.Layout(gtx)
-				layout.Align(layout.Center).Layout(gtx, func() {
+				layout.Center.Layout(gtx, func() {
 					th.H5(b.Name).Layout(gtx)
 				})
 			}),
 			layout.Flexed(0.2, func() {
-				layout.Align(layout.Center).Layout(gtx, func() {
+				layout.Center.Layout(gtx, func() {
 					th.Caption(b.Name).Layout(gtx)
 				})
 			}),
