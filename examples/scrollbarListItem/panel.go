@@ -39,7 +39,7 @@ func onePanel(th *material.Theme) *Panel {
 
 func (p *Panel) panelLayout(gtx *layout.Context) func() {
 	return func() {
-		p.scrollBar = p.ScrollBar(th)
+		p.scrollBar = p.ScrollBar()
 		visibleObjectsNumber := 0
 		p.panelContent.Layout(gtx, p.panelObjectsNumber, func(i int) {
 			p.panelObject[i]()

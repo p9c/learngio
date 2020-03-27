@@ -5,7 +5,7 @@ import (
 	"gioui.org/layout"
 	"gioui.org/unit"
 	"gioui.org/widget/material"
-	"github.com/go-gl/glfw/v3.2/glfw"
+	"github.com/davecgh/go-spew/spew"
 	"github.com/p9c/learngio/examples/html/native/model"
 )
 
@@ -16,123 +16,40 @@ var (
 )
 
 func createBrowserWindow(gtx *layout.Context, th *material.Theme, document *model.NodeDOM) model.AppWindow {
-	defaultCursor := glfw.CreateStandardCursor(glfw.ArrowCursor)
+	//defaultCursor := glfw.CreateStandardCursor(glfw.ArrowCursor)
 	pageTile := getPageTitle(document) + " - thdwb"
-
 	browserWindow := model.AppWindow{
-		Width:  900,
-		Height: 600,
-
-		ViewportWidth:  0,
-		ViewportHeight: 0,
-
-		AddressbarWidth:  0,
-		AddressbarHeight: 0,
-
-		CursorX: 0,
-		CursorY: 0,
-
-		DefaultCursor: defaultCursor,
-
-		Title:  pageTile,
-		Redraw: true,
-		Resize: true,
-		Reflow: true,
-
+		Width:          900,
+		Height:         600,
+		Title:          pageTile,
 		ViewportOffset: 0,
-
-		DOM: document,
+		DOM:            document,
 	}
-
-	//glfw.WindowHint(glfw.StencilBits, 8)
-	//glfw.WindowHint(glfw.DepthBits, 0)
-
-	//window, err := glfw.CreateWindow(browserWindow.Width, browserWindow.Height, browserWindow.Title, nil, nil)
-	//if err != nil {
-	//	log.Fatalf("Error creating window: %v", err)
-	//}
-	//window.MakeContextCurrent()
-
-	//err = gl.Init()
-	//if err != nil {
-	//	log.Fatalf("Error initializing GL: %v", err)
-	//}
-	//
-	//glfw.SwapInterval(1)
-	//gl.Enable(gl.MULTISAMPLE)
-
-	//addressbarBackend, err := goglbackend.New(0, 0, 0, 0, nil)
-	//if err != nil {
-	//	log.Fatalf("Error loading canvas GL assets: %v", err)
-	//}
-	//
-	//viewportBackend, err := goglbackend.New(0, 0, 0, 0, nil)
-	//if err != nil {
-	//	log.Fatalf("Error loading canvas GL assets: %v", err)
-	//}
-
-	//browserWindow.GlfwWindow = window
-	//browserWindow.AddressbarBackend = addressbarBackend
-	//browserWindow.ViewportBackend = viewportBackend
-
 	return browserWindow
 }
 
 func browserWindowMainLoop(gtx *layout.Context, th *material.Theme, document *model.NodeDOM) {
-	//for !browserWindow.GlfwWindow.ShouldClose() {
-	//	if browserWindow.Redraw {
-	//		browserWindow.GlfwWindow.MakeContextCurrent()
-	//		//windowWidth, windowHeight := browserWindow.GlfwWindow.GetSize()
-	//
-	//		if windowWidth != browserWindow.Width || windowHeight != browserWindow.Height {
-	//			browserWindow.Width = windowWidth
-	//			browserWindow.Height = windowHeight
-	//			browserWindow.Resize = true
-	//			browserWindow.Reflow = true
-	//		}
-	//
-	//		browserWindow.AddressbarWidth = browserWindow.Width
-	//		browserWindow.AddressbarHeight = 40
-	//
-	//		browserWindow.ViewportWidth = browserWindow.Width
-	//		browserWindow.ViewportHeight = browserWindow.Height - browserWindow.AddressbarHeight
-	//
-	//		//browserWindow.AddressbarBackend.SetBounds(0, browserWindow.ViewportHeight, browserWindow.AddressbarWidth, browserWindow.AddressbarHeight)
-	//		//browserWindow.ViewportBackend.SetBounds(0, 0, browserWindow.ViewportWidth, browserWindow.ViewportHeight)
-	//
-	//		updateAddressBar(browserWindow)
-	//
-	//if browserWindow.Reflow {
-	//	browserWindow.DOM.Style.Width = float64(browserWindow.ViewportWidth)
-	//	browserWindow.DOM.Style.Height = float64(browserWindow.ViewportHeight)
-	//
-	//	browserWindow.DOM.Style.Top = 0
-	//	browserWindow.DOM.Style.Left = 0
 	widgets := []func(){}
-
 	nodeChildren := getNodeChildren(document)
 	for i := 0; i < len(nodeChildren); i++ {
 		ReflowNode(nodeChildren[i], nodeChildren[i], 0)
 		///
 		widgets = append(widgets, func() {
-			ch := th.Caption(fmt.Sprint(nodeChildren[i].Element))
+			ch := th.Caption(fmt.Sprint(nodeChildren[i-1].Element))
 			ch.Layout(gtx)
 		})
+		spew.Dump(nodeChildren[i])
 
 		//}
 
 		////
 	}
+
 	//
 	//	browserWindow.Reflow = false
 	//}
 
 	//updateViewport(browserWindow)
-
-	//browserWindow.Resize = false
-	//browserWindow.Redraw = false
-	//browserWindow.GlfwWindow.SwapBuffers()
-	//}
 
 	//glfw.WaitEvents()
 	//}
@@ -155,10 +72,6 @@ func updateAddressBar(browserWindow *model.AppWindow) {
 			browserWindow.UIElements[i].Redraw()
 		}
 	} else {
-		//w := float64(browserWindow.AddressbarWidth)
-		//h := float64(browserWindow.AddressbarHeight)
-
-		//addressbarBackground := Box("addressbarBackground", 0, 0, float64(browserWindow.Width), float64(browserWindow.AddressbarHeight), browserWindow.Addressbar)
 
 		//addressbarText := browserWindow.Location
 		//if oldAddressBarInput != nil {

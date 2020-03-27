@@ -29,7 +29,7 @@ func main() {
 	//th := material.NewTheme()
 	// Initialize the graphic context on an RGBA image
 
-	n := 5
+	n := 56
 	points := Polygon(n, 1512, 1512, 400)
 	dc := gg.NewContext(2024, 2024)
 	dc.SetHexColor("fff")

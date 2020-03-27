@@ -54,13 +54,13 @@ type ScrollBarButton struct {
 func (p *Panel) ScrollBar() *ScrollBar {
 	iconGrab, _ := material.NewIcon(icons.NavigationMenu)
 	iconUp, _ := material.NewIcon(icons.NavigationArrowDropUp)
-	iconDown, _ := material.NewIcon(icons.NavigationArrowDropDown)
+	//iconDown, _ := material.NewIcon(icons.NavigationArrowDropDown)
 	itemValue := item{
 		i: 0,
 	}
 	up := &ScrollBarButton{
-		icon:        iconUp,
-		button:      th.IconButton(iconUp),
+		icon: iconUp,
+		//button:      th.IconButton(iconUp),
 		Height:      p.size,
 		iconColor:   "ff445588",
 		iconBgColor: "ff882266",
@@ -72,8 +72,8 @@ func (p *Panel) ScrollBar() *ScrollBar {
 		iconPadding: 0,
 	}
 	down := &ScrollBarButton{
-		icon:        iconUp,
-		button:      th.IconButton(iconDown),
+		icon: iconUp,
+		//button:      th.IconButton(iconDown),
 		Height:      16,
 		iconSize:    16,
 		iconColor:   "ff445588",

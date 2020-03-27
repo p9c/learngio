@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"gioui.org/app"
 	"gioui.org/f32"
 	"gioui.org/font/gofont"
@@ -36,7 +35,6 @@ var (
 
 func main() {
 
-	flag.Parse()
 	gofont.Register()
 	th := material.NewTheme()
 
@@ -48,6 +46,7 @@ func main() {
 	icon = ic
 
 	resource := controller.GetResource(url)
+
 	go func() {
 		w := app.NewWindow(
 			app.Size(unit.Dp(1400), unit.Dp(800)),

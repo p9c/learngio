@@ -28,22 +28,7 @@ func main() {
 					Axis: layout.Horizontal,
 				}.Layout(gtx,
 					layout.Flexed(1, func() {
-						width := gtx.Constraints.Width.Max
-						height := gtx.Constraints.Height.Max
-						m := image.NewRGBA(image.Rect(0, 0, width, height))
-						drawGradient(*m)
-
-						addrQR := paint.NewImageOp(m)
-						//sz := gtx.Constraints.Width.Constrain(gtx.Px(unit.Dp(100)))
-						addrQR.Add(gtx.Ops)
-						paint.PaintOp{
-							Rect: f32.Rectangle{
-								Max: f32.Point{
-									X: float32(width), Y: float32(height),
-								},
-							},
-						}.Add(gtx.Ops)
-						gtx.Dimensions.Size = image.Point{X: width, Y: height}
+						drawGradient(gtx)
 					}),
 				)
 				e.Frame(gtx.Ops)
@@ -53,16 +38,30 @@ func main() {
 	app.Main()
 }
 
-func drawGradient(m image.RGBA) {
+func drawGradient(gtx *layout.Context) {
+	width := gtx.Constraints.Width.Max
+	height := gtx.Constraints.Height.Max
+	m := image.NewRGBA(image.Rect(0, 0, width, height))
 	size := m.Bounds().Size()
 	for x := 0; x < size.X; x++ {
 		for y := 0; y < size.Y; y++ {
 			color := color.RGBA{
-				uint8(255 * x / size.X),
+				uint8(48 * x / size.X),
 				uint8(255 * y / size.Y),
-				55,
+				255,
 				255}
 			m.Set(x, y, color)
 		}
 	}
+	addrQR := paint.NewImageOp(m)
+	//sz := gtx.Constraints.Width.Constrain(gtx.Px(unit.Dp(100)))
+	addrQR.Add(gtx.Ops)
+	paint.PaintOp{
+		Rect: f32.Rectangle{
+			Max: f32.Point{
+				X: float32(width), Y: float32(height),
+			},
+		},
+	}.Add(gtx.Ops)
+	gtx.Dimensions.Size = image.Point{X: width, Y: height}
 }

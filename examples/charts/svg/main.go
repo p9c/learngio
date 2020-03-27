@@ -14,6 +14,10 @@ import (
 	"image/color"
 )
 
+var (
+	icsLogo, _ = material.NewIcon(pieChart())
+)
+
 //
 // Pie Charts
 //
@@ -94,7 +98,10 @@ func pieChart() []byte {
 //  Main
 //
 func main() {
-
+	//icsLogo, err := material.NewIcon(pieChart())
+	//if err != nil {
+	//	//log.FATAL(err)
+	//}
 	//svgOOO := ico.ParallelCoin
 	//svgOOO := pieChart()
 
@@ -116,11 +123,6 @@ func main() {
 							layout.Flexed(0.5, func() {
 
 								layout.Inset{Top: unit.Dp(4), Bottom: unit.Dp(4), Left: unit.Dp(5), Right: unit.Dp(4)}.Layout(gtx, func() {
-
-									icsLogo, err := material.NewIcon(pieChart())
-									if err != nil {
-										//log.FATAL(err)
-									}
 
 									icsLogo.Color = color.RGBA{A: 0xff, R: 0xcf, G: 0xcf, B: 0xcf}
 									icsLogo.Layout(gtx, unit.Dp(64))
