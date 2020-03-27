@@ -24,28 +24,10 @@ func main() {
 	}
 	defer existingImageFile.Close()
 
-	// Calling the generic image.Decode() will tell give us the data
-	// and type of image it is as a string. We expect "png"
-	//imageData, imageType, err := image.Decode(existingImageFile)
-	//if err != nil {
-	//	// Handle error
-	//}
-	////fmt.Println(imageData)
-	//fmt.Println(imageType)
-
-	// We only need this because we already read from the file
-	// We have to reset the file pointer back to beginning
-	//existingImageFile.Seek(0, 0)
-
-	// Alternatively, since we know it is a png already
-	// we can call png.Decode() directly
 	loadedImage, err := jpeg.Decode(existingImageFile)
 	if err != nil {
 		// Handle error
 	}
-	//fmt.Println(loadedImage)
-
-	//fmt.Println("jel  nil?:", loadedImage)
 
 	go func() {
 		w := app.NewWindow(
