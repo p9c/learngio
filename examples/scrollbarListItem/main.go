@@ -8,10 +8,14 @@ import (
 	"gioui.org/widget/material"
 )
 
+var (
+	th *material.Theme
+)
+
 func main() {
 	gofont.Register()
-	th := material.NewTheme()
-	panel := onePanel(th)
+	th = material.NewTheme()
+	panel := onePanel()
 	go func() {
 		w := app.NewWindow()
 		gtx := layout.NewContext(w.Queue())

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"gioui.org/io/pointer"
 	"gioui.org/layout"
 	"gioui.org/unit"
@@ -51,16 +52,16 @@ type ScrollBarButton struct {
 	iconPadding float32
 }
 
-func (p *Panel) ScrollBar() *ScrollBar {
+func (p *Panel) ScrollBar() {
 	iconGrab, _ := material.NewIcon(icons.NavigationMenu)
 	iconUp, _ := material.NewIcon(icons.NavigationArrowDropUp)
-	//iconDown, _ := material.NewIcon(icons.NavigationArrowDropDown)
+	iconDown, _ := material.NewIcon(icons.NavigationArrowDropDown)
 	itemValue := item{
 		i: 0,
 	}
 	up := &ScrollBarButton{
-		icon: iconUp,
-		//button:      th.IconButton(iconUp),
+		//icon: iconUp,
+		button:      th.IconButton(iconUp),
 		Height:      p.size,
 		iconColor:   "ff445588",
 		iconBgColor: "ff882266",
@@ -72,8 +73,8 @@ func (p *Panel) ScrollBar() *ScrollBar {
 		iconPadding: 0,
 	}
 	down := &ScrollBarButton{
-		icon: iconUp,
-		//button:      th.IconButton(iconDown),
+		//icon: iconDown,
+		button:      th.IconButton(iconDown),
 		Height:      16,
 		iconSize:    16,
 		iconColor:   "ff445588",
@@ -90,7 +91,7 @@ func (p *Panel) ScrollBar() *ScrollBar {
 		},
 		OperateValue: 1,
 	}
-	return &ScrollBar{
+	p.scrollBar = &ScrollBar{
 		ColorBg:      "ff885566",
 		BorderRadius: [4]float32{},
 		OperateValue: 1,
@@ -100,17 +101,19 @@ func (p *Panel) ScrollBar() *ScrollBar {
 		up:   up,
 		down: down,
 	}
+	return
 }
-func (s *ScrollBarButton) scrollBarButton() *material.IconButton {
-	button := s.button
-	button.Inset.Top = unit.Dp(0)
-	button.Inset.Bottom = unit.Dp(0)
-	button.Inset.Right = unit.Dp(0)
-	button.Inset.Left = unit.Dp(0)
-	button.Size = unit.Dp(32)
-	button.Padding = unit.Dp(0)
-	return &button
-}
+
+//func (s *ScrollBarButton) scrollBarButton() *material.IconButton {
+//	button := s.button
+//	button.Inset.Top = unit.Dp(0)
+//	button.Inset.Bottom = unit.Dp(0)
+//	button.Inset.Right = unit.Dp(0)
+//	button.Inset.Left = unit.Dp(0)
+//	button.Size = unit.Dp(32)
+//	button.Padding = unit.Dp(0)
+//	return &button
+//}
 func (p *Panel) SliderLayout(gtx *layout.Context) {
 	layout.Flex{
 		Axis: layout.Vertical,
@@ -123,7 +126,13 @@ func (p *Panel) SliderLayout(gtx *layout.Context) {
 					p.panelContent.Position.Offset = 0
 				}
 			}
-			p.scrollBar.up.scrollBarButton().Layout(gtx, widgetButtonUp)
+			fmt.Println("daj", p.scrollBar)
+			p.
+				scrollBar.
+				up.
+				button.Layout(
+				gtx,
+				widgetButtonUp)
 		}),
 		layout.Flexed(1, func() {
 			p.bodyLayout(gtx)
@@ -136,7 +145,7 @@ func (p *Panel) SliderLayout(gtx *layout.Context) {
 					p.panelContent.Position.Offset = 0
 				}
 			}
-			p.scrollBar.down.scrollBarButton().Layout(gtx, widgetButtonDown)
+			p.scrollBar.down.button.Layout(gtx, widgetButtonDown)
 		}),
 	)
 }

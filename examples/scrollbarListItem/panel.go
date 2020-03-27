@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"gioui.org/layout"
-	"gioui.org/widget/material"
 )
 
 type item struct {
@@ -26,8 +25,8 @@ type Panel struct {
 	scrollUnit         int
 }
 
-func onePanel(th *material.Theme) *Panel {
-	return &Panel{
+func onePanel() *Panel {
+	p := &Panel{
 		Name: "OnePanel",
 		panelContent: &layout.List{
 			Axis:        layout.Vertical,
@@ -35,11 +34,12 @@ func onePanel(th *material.Theme) *Panel {
 		},
 		size: 16,
 	}
+	p.ScrollBar()
+	return p
 }
 
 func (p *Panel) panelLayout(gtx *layout.Context) func() {
 	return func() {
-		p.scrollBar = p.ScrollBar()
 		visibleObjectsNumber := 0
 		p.panelContent.Layout(gtx, p.panelObjectsNumber, func(i int) {
 			p.panelObject[i]()
