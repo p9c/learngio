@@ -8,12 +8,11 @@ import (
 	"gioui.org/op/paint"
 	"gioui.org/unit"
 	"gioui.org/widget/material"
-	"github.com/p9c/learngio/examples/wav/waveform"
-	"github.com/p9c/learngio/examples/wav/wavreader"
+	"github.com/p9c/learngio/examples/image/wav/waveform"
+	"github.com/p9c/learngio/examples/image/wav/wavreader"
 	"golang.org/x/image/draw"
 	"image"
 	"image/color"
-	"image/jpeg"
 	"image/png"
 	"os"
 )
@@ -38,15 +37,15 @@ func main() {
 		//return err
 	}
 
-	img := waveform.MinMax(w0, &waveform.Options{
-		Width:   1800,
-		Height:  400,
-		Zoom:    1.7,
-		Half:    false,
-		MarginL: *margin,
-		MarginR: *margin,
-		MarginT: *margin,
-		MarginB: *margin,
+	loadedImage := waveform.MinMax(w0, &waveform.Options{
+		Width:  1800,
+		Height: 400,
+		Zoom:   1.7,
+		Half:   false,
+		//MarginL: *margin,
+		//MarginR: *margin,
+		//MarginT: *margin,
+		//MarginB: *margin,
 		Front: &color.NRGBA{
 			R: 255,
 			G: 128,
@@ -63,15 +62,15 @@ func main() {
 	}
 	defer w.Close()
 
-	err = png.Encode(w, img)
+	err = png.Encode(w, loadedImage)
 	if err != nil {
-		return err
+		//return err
 	}
 
-	loadedImage, err := jpeg.Decode(img)
-	if err != nil {
-		// Handle error
-	}
+	//loadedImage, err := jpeg.Decode(img)
+	//if err != nil {
+	//	// Handle error
+	//}
 	//fmt.Println(loadedImage)
 
 	//fmt.Println("jel  nil?:", loadedImage)
