@@ -2,7 +2,6 @@ package main
 
 import (
 	"gioui.org/app"
-	"gioui.org/f32"
 	"gioui.org/io/system"
 	"gioui.org/layout"
 	"gioui.org/op/paint"
@@ -68,10 +67,6 @@ func main() {
 		}
 	}()
 	app.Main()
-}
-
-func toPointF(p image.Point) f32.Point {
-	return f32.Point{X: float32(p.X), Y: float32(p.Y)}
 }
 
 func (w *wav) loadWav(width, height int, zoom float32) *image.NRGBA {
