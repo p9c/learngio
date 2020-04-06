@@ -48,7 +48,7 @@ func drawGradient(gtx *layout.Context) {
 			color := color.RGBA{
 				uint8(48 * x / size.X),
 				uint8(255 * y / size.Y),
-				255,
+				uint8(48 * x / size.X),
 				255}
 			m.Set(x, y, color)
 		}
