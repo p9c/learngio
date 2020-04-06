@@ -101,7 +101,7 @@ func main() {
 
 						in := layout.UniformInset(unit.Dp(0))
 						in.Layout(gtx, func() {
-							layout.Align(layout.Center).Layout(gtx, func() {
+							layout.Center.Layout(gtx, func() {
 								th.H3(fmt.Sprint(content)).Layout(gtx)
 							})
 						})
