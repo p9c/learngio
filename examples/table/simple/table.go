@@ -6,7 +6,7 @@ import (
 	"gioui.org/op/clip"
 	"gioui.org/unit"
 	"gioui.org/widget/material"
-	"github.com/p9c/learngio/helpers"
+	"github.com/gioapp/helpers"
 )
 
 func (t *Table) tableLayout(gtx *layout.Context, th *material.Theme) {

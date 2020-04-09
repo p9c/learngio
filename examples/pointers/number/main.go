@@ -10,7 +10,7 @@ import (
 	"gioui.org/text"
 	"gioui.org/unit"
 	"gioui.org/widget/material"
-	"github.com/p9c/learngio/helpers"
+	"github.com/gioapp/helpers"
 	"image"
 )
 

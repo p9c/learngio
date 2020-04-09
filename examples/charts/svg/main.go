@@ -9,7 +9,7 @@ import (
 	"gioui.org/unit"
 	"gioui.org/widget/material"
 	"github.com/ajstarks/svgo"
-	"github.com/p9c/learngio/helpers"
+	"github.com/gioapp/helpers"
 	"github.com/vdobler/chart"
 	"image/color"
 )

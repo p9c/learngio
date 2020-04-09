@@ -7,7 +7,7 @@ import (
 	"gioui.org/io/system"
 	"gioui.org/layout"
 	"gioui.org/unit"
-	"github.com/p9c/learngio/helpers"
+	"github.com/gioapp/helpers"
 )
 
 func main() {

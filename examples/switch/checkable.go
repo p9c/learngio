@@ -4,7 +4,7 @@ package main
 
 import (
 	"gioui.org/io/pointer"
-	"github.com/p9c/learngio/helpers"
+	"github.com/gioapp/helpers"
 	"image"
 	"image/color"
 

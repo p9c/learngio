@@ -7,7 +7,7 @@ import (
 	"gioui.org/unit"
 	"image/color"
 
-	"github.com/p9c/learngio/helpers"
+	"github.com/gioapp/helpers"
 )
 
 func main() {
