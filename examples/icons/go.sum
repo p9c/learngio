@@ -2,6 +2,8 @@ dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7
 gioui.org v0.0.0-20200302163459-9bbeb92b614c h1:QExE9puc2dj7HEh4Y5e05buQ3QhVSXEWlbKWftvVRcE=
 gioui.org v0.0.0-20200302163459-9bbeb92b614c/go.mod h1:AHI9rFr6AEEHCb8EPVtb/p5M+NMJRKH58IOp8O3Je04=
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
+github.com/gioapp/helpers v0.0.0-20200409221157-9559227cbcf5 h1:6Ghm0McdtwTfSCnuVBNtf/YhXA0Ldqs16OWZdSfU19E=
+github.com/gioapp/helpers v0.0.0-20200409221157-9559227cbcf5/go.mod h1:EqEP+Z0g05Tq7U+6oZp61FnDQh/zXlLrqmhGRxuaPqU=
 github.com/go-gl/glfw v0.0.0-20190409004039-e6da0acd62b1/go.mod h1:vR7hzQXu2zJy9AVAgeJqvqgH9Q5CA+iKCZ2gyEVpxRU=
 github.com/go-gl/glfw/v3.3/glfw v0.0.0-20200222043503-6f7a984d4dc4/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=
 github.com/gop9/olt v0.0.0-20200202132135-d956aad50b08 h1:87IKpXOH9qfvEH9dzZJ+40xREz5i+Se5kmXE6g5PTpo=

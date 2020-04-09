@@ -4,6 +4,8 @@ gioui.org v0.0.0-20200229151727-48eb5c666cdc/go.mod h1:AHI9rFr6AEEHCb8EPVtb/p5M+
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/gioapp/helpers v0.0.0-20200409221157-9559227cbcf5 h1:6Ghm0McdtwTfSCnuVBNtf/YhXA0Ldqs16OWZdSfU19E=
+github.com/gioapp/helpers v0.0.0-20200409221157-9559227cbcf5/go.mod h1:EqEP+Z0g05Tq7U+6oZp61FnDQh/zXlLrqmhGRxuaPqU=
 github.com/go-gl/gl v0.0.0-20181026044259-55b76b7df9d2/go.mod h1:482civXOzJJCPzJ4ZOX/pwvXBWSnzD4OKMdH4ClKGbk=
 github.com/go-gl/glfw v0.0.0-20190409004039-e6da0acd62b1 h1:QbL/5oDUmRBzO9/Z7Seo6zf912W/a6Sr4Eu0G/3Jho0=
 github.com/go-gl/glfw v0.0.0-20190409004039-e6da0acd62b1/go.mod h1:vR7hzQXu2zJy9AVAgeJqvqgH9Q5CA+iKCZ2gyEVpxRU=
