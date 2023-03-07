@@ -17,5 +17,5 @@ require (
 	github.com/veandco/go-sdl2 v0.4.1
 	github.com/wrnrlr/shape v0.0.0-20200126230213-0d32e11d761a
 	golang.org/x/exp v0.0.0-20200228211341-fcea875c7e85
-	golang.org/x/image v0.0.0-20200119044424-58c23975cae1
+	golang.org/x/image v0.5.0
 )
